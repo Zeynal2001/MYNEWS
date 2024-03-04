@@ -15,7 +15,16 @@ namespace MYNEWS.Controllers
 
         public IActionResult Index()
         {
+            ViewData["title"] = "Home";
             return View();
+        }
+
+
+        public IActionResult Contact()
+        {
+            ViewData["title"] = "Contact";
+            return View();
+            //return RedirectToAction("Index");
         }
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

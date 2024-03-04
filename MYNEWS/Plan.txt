@@ -1,15 +1,15 @@
 Controllers:
 ``Area: User``
-1. HomeController -> Index(), ContactUs(), About()
+1. HomeController -> Index(), Contact(), About(), Seearch(), 
 
-2. CategoriesController -> 
+2. CategoriesController ->  Filter(string genreFilter, int page = 1)/Pagination
 Index(): Tüm kategorileri listeler.
 Details(int id): Belirli bir kategorinin ayrıntılarını gösterir.
 Create(): Yeni bir kategori oluşturmak için bir form gösterir.
 Edit(int id): Belirli bir kategoriyi düzenlemek için bir form gösterir.
 Delete(int id): Belirli bir kategoriyi siler. 
 
-3. NewsController ->
+3. NewsController -> 
 Haber İşlemleri:
 
 Index(): Tüm haberleri listeler.
@@ -117,5 +117,8 @@ public class AuthController : Controller
 * ASP.NET Core Identity ile Kullanıcı Kimlik Doğrulama: [geçersiz URL kaldırıldı]
 
 **Umarım bu bilgiler yardımcı olmuştur!**
+
+
+5. ProfilController ->
 
 ``Area : Admin``
