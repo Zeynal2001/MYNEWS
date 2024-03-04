@@ -1,0 +1,121 @@
+Controllers:
+``Area: User``
+1. HomeController -> Index(), ContactUs(), About()
+
+2. CategoriesController -> 
+Index(): Tüm kategorileri listeler.
+Details(int id): Belirli bir kategorinin ayrýntýlarýný gösterir.
+Create(): Yeni bir kategori oluþturmak için bir form gösterir.
+Edit(int id): Belirli bir kategoriyi düzenlemek için bir form gösterir.
+Delete(int id): Belirli bir kategoriyi siler. 
+
+3. NewsController ->
+Haber Ýþlemleri:
+
+Index(): Tüm haberleri listeler.
+Details(int id)/Single(int id): Belirli bir haberin ayrýntýlarýný gösterir.
+Create(): Yeni bir haber oluþturmak için bir form gösterir.
+Edit(int id): Belirli bir haberi düzenlemek için bir form gösterir.
+Delete(int id): Belirli bir haberi siler.
+Filtreleme ve Sýralama:
+
+GetNewsByCategory(int categoryId): Belirli bir kategoriye ait haberleri listeler.
+SearchNews(string query): Arama sorgusuna göre haberleri arar.
+GetMostViewedNews(int count): En çok görüntülenen haberleri listeler.
+GetNewsByTag(string tag): Belirli bir etikete ait haberleri listeler.
+GetNewsByDate(DateTime date): Belirli bir tarihe ait haberleri listeler.
+GetLatestNews(int count): En son haberleri listeler.
+Diðer Ýþlemler:
+
+SearchNews(string query): Arama sorgusuna göre haberleri arar.
+SubscribeToNewsletter(string email): Kullanýcýlarý haber bültenine abone eder.
+UnsubscribeFromNewsletter(string email): Kullanýcýlarý haber bülteninden abonelikten çýkarýr.
+Bu, NewsController için yazabileceðiniz actionlara sadece birkaç örnektir.
+
+Kendi ihtiyaçlarýnýza göre bu actionlarý özelleþtirebilirsiniz.
+
+Örneðin:
+
+Belirli bir kategoriye veya zamana göre en çok görüntülenen haberleri filtrelemek için parametreler ekleyebilirsiniz.
+Haberleri görüntülenme sayýsýna, tarihe veya diðer kriterlere göre sýralamak için seçenekler ekleyebilirsiniz.
+Her haberin görüntülenme sayýsýný gösteren bir view oluþturmak için action'dan dönen haberleri kullanabilirsiniz.
+
+4. AuthController ->
+**AuthController için yazmanýz gereken action'lar, uygulamanýzýn kimlik doðrulama gereksinimlerine baðlýdýr.** 
+
+**Genellikle, aþaðýdaki action'lara ihtiyacýnýz olacaktýr:**
+
+**1. Login:** Kullanýcýlarýn kimlik bilgilerini girerek oturum açmasýna olanak tanýr.
+
+**2. Register:** Yeni kullanýcýlarýn kaydolmasýna olanak tanýr.
+
+**3. Logout:** Kullanýcýlarýn oturumunu kapatmasýna olanak tanýr.
+
+**4. ForgotPassword:** Kullanýcýlarýn unutulan þifrelerini sýfýrlamasýna olanak tanýr.
+
+**5. ResetPassword:** Kullanýcýlarýn þifrelerini sýfýrlamasýna olanak tanýr.
+
+**6. ChangePassword:** Kullanýcýlarýn þifrelerini deðiþtirmesine olanak tanýr.
+
+**7. VerifyEmail:** Kullanýcýlarýn e-posta adreslerini doðrulamasýna olanak tanýr.
+
+**8. ExternalLogin:** Kullanýcýlarýn Facebook, Google gibi harici saðlayýcýlar aracýlýðýyla oturum açmasýna olanak tanýr.
+
+**9. ConfirmEmail:** Kullanýcýlarýn e-posta adreslerini onaylamasýna olanak tanýr.
+
+**Ek action'lara ihtiyacýnýz olabilir:**
+
+* Kullanýcý rollerini yönetmek
+* Kullanýcý izinlerini yönetmek
+* Kullanýcý profillerini yönetmek
+
+**Action'larý yazarken:**
+
+* **Güvenli kodlama uygulamalarýný** takip ettiðinizden emin olun.
+* **Hata iþlemeyi** doðru þekilde uygulayýn.
+* **Kullanýcý dostu bir deneyim** sunmaya çalýþýn.
+
+**Örnek:**
+
+```csharp
+public class AuthController : Controller
+{
+    // ...
+
+    public ActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public ActionResult Login(LoginViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            // Kullanýcý kimlik bilgilerini doðrular.
+            var user = _userManager.FindByNameAsync(model.Username).Result;
+            if (user != null && _userManager.CheckPasswordAsync(user, model.Password).Result)
+            {
+                // Kullanýcýyý oturum açar.
+                await _signInManager.SignInAsync(user, isPersistent: model.RememberMe);
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError("", "Kullanýcý adý veya parola hatalý.");
+        }
+
+        return View(model);
+    }
+
+    // ...
+}
+```
+
+**Ek kaynaklar:**
+
+* ASP.NET Core Identity: [https://docs.microsoft.com/tr-tr/aspnet/core/security/authentication/identity](https://docs.microsoft.com/tr-tr/aspnet/core/security/authentication/identity)
+* ASP.NET Core Identity ile Kullanýcý Kimlik Doðrulama: [geçersiz URL kaldýrýldý]
+
+**Umarým bu bilgiler yardýmcý olmuþtur!**
+
+``Area : Admin``
