@@ -22,7 +22,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(op =>
 
 
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,8 +37,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // Istifadeci Login edibmi
-app.UseAuthorization(); // Istifadeci Login etse bele icazesi varmi(rollar burda isimize yarayir)
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

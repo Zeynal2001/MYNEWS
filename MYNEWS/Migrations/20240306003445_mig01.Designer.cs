@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MYNEWS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240306000626_mig01")]
+    [Migration("20240306003445_mig01")]
     partial class mig01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
