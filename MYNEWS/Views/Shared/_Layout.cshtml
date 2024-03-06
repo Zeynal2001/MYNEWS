@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MYNEWS</title>
+    <title>MYNEWS-@ViewData["title"]</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -49,7 +49,9 @@
                 </a>
             </div>
             <div class="col-lg-8 text-center text-lg-right">
-                <img class="img-fluid" src="~/img/ads-700x70.jpg" alt="">
+                @* <img class="img-fluid" src="~/img/ads-700x70.jpg" alt=""> *@
+                @* <button type="button" class="btn btn-danger">Sign In</button> *@
+                
             </div>
         </div>
     </div>
@@ -67,18 +69,44 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
                 <div class="navbar-nav mr-auto py-0">
-                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Home</a>
-                    <a asp-controller="Categories" asp-action="Index" class="nav-item nav-link">Categories</a>
+                    @if (Context.Request.Path == "/")
+                    {
+                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Home</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
+                    }
+
+                    @if (Context.Request.Path == "/Categories")
+                    {
+                        <a asp-controller="Categories" asp-action="Index" class="nav-item nav-link active">Categories</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Categories" asp-action="Index" class="nav-item nav-link">Categories</a>
+                    }
                     <!-- <a href="single.html" class="nav-item nav-link">Single News</a> -->
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="#" class="dropdown-item">Menu item 1</a>
-                            <a href="#" class="dropdown-item">Menu item 2</a>
-                            <a href="#" class="dropdown-item">Menu item 3</a>
-                        </div>
-                    </div>
-                    <a asp-controller="Home" asp-action="Contact" class="nav-item nav-link">Contact</a>
+                    @* <div class="nav-item dropdown">
+                        <button class="nav-link btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            Subcategories
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu">
+                            <li><a class="dropdown-item-right" href="#">Öğe 1</a></li>
+                            <li><a class="dropdown-item" href="#">Öğe 2</a></li>
+                            <li><a class="dropdown-item" href="#">Öğe 3</a></li>
+                        </ul>
+                    </div> *@
+
+                   
+                    @if (Context.Request.Path == "/Home/Contact")
+                    {
+                        <a asp-controller="Home" asp-action="Contact" class="nav-item nav-link active">Contact</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="Contact" class="nav-item nav-link">Contact</a>
+                    }
                 </div>
                 <div class="input-group ml-auto" style="width: 100%; max-width: 300px;">
                     <input type="text" class="form-control" placeholder="Keyword">
@@ -86,6 +114,7 @@
                         <button class="input-group-text text-secondary"><i
                                 class="fa fa-search"></i></button>
                     </div>
+                    <button type="button" class="btn btn-outline-danger ml-5">Login</button>
                 </div>
             </div>
         </nav>

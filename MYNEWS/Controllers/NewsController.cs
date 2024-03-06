@@ -6,11 +6,13 @@ namespace MYNEWS.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["title"] = "News";
             return View();
         }
 
         public IActionResult Single()
         {
+            ViewData["title"] = "Single";
             return View();
         }
     }

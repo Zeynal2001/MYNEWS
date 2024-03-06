@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MYNEWS.Data;
+using MYNEWS.Entities;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,16 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddIdentity<AppUser, IdentityRole>(op =>
+{
+    //op.Password.RequireUppercase = false;
+    //op.Password.RequireNonAlphanumeric = false;
+})
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<AppDbContext>();
+
+
+
 
 var app = builder.Build();
 
@@ -26,7 +38,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Istifadeci Login edibmi
+app.UseAuthorization(); // Istifadeci Login etse bele icazesi varmi(rollar burda isimize yarayir)
 
 app.MapControllerRoute(
     name: "default",

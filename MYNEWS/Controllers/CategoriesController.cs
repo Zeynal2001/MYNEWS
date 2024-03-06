@@ -6,6 +6,7 @@ namespace MYNEWS.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["title"] = "Categories";
             return View();
         }
 

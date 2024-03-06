@@ -1,10 +1,82 @@
-﻿    <!-- Breadcrumb Start -->
+﻿@{
+    var action = Url.ActionLink().ToString();
+}   
+ @{
+    /*TODO: Categories in View modelini yaratdiqdan sonra burda hemin modelin adini yaz.
+            Sonra da breadcrumb da olan Technology nin yerine modelin CageoryName i yaz.
+            Modeli yaradarken sonuna vm veya VM yaz.
+    */
+ }
+<!-- Breadcrumb Start -->
 <div class="container-fluid">
     <div class="container">
         <nav class="breadcrumb bg-transparent m-0 p-0">
-            <a class="breadcrumb-item" asp-controller="Home" asp-action="Index">Home</a>
-            <a class="breadcrumb-item" href="#">Category</a>
+            <a asp-controller="Home" asp-action="Index" class="breadcrumb-item">Home</a>
+            @{
+                //TODO: Actionu aşağıda dinamik olacaq şəkildə göstər
+            }
+            <a asp-controller="Categories" asp-action="Index" class="breadcrumb-item">@Context.Request.Path.ToString().Replace("/", " ")</a>
             <span class="breadcrumb-item active">Technology</span>
+            @* <div class="dropdown ml-5">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Subcategories</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                    <h6 class="dropdown-header">Sport</h6>
+                    <a href="#" class="dropdown-item">Football</a>
+                    <a href="#" class="dropdown-item">Basketball</a>
+                    <a href="#" class="dropdown-item">Tennis</a>
+                    <h6 class="dropdown-header">Pz</h6>
+                </div>
+            </div> *@
+            <div class="btn-group ml-auto">
+                <button class="btn btn-secondary btn-sm dropdown-toggle btn-danger" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Subcategories
+                </button>
+                <div class="dropdown-menu">
+                    <h6 class="dropdown-header">Technology</h6>
+                    <a href="#" class="dropdown-item">Software</a>
+                    <a href="#" class="dropdown-item">Internet</a>
+                    <a href="#" class="dropdown-item">Networking</a>
+                    <a href="#" class="dropdown-item">Virtual Reality</a>
+                    <a href="#" class="dropdown-item">Robotics</a>
+                    
+                    @* Computers (Bilgisayarlar)
+                    Software (Yazılım)
+                    Hardware (Donanım)
+                    Internet (İnternet)
+                    Mobile Devices (Mobil Cihazlar)
+                    Electronics (Elektronik)
+                    Robotics (Robotik)
+                    Artificial Intelligence (Yapay Zeka)
+                    Augmented Reality (Artırılmış Gerçeklik)
+                    Virtual Reality (Sanal Gerçeklik)
+                    Gaming (Oyunlar)
+                    Networking (Ağlar)
+                    Cybersecurity (Güvenlik)
+                    Wearable Technology (Giysilere Entegre Teknoloji)
+                    Internet of Things (Nesnelerin İnterneti)
+                    Renewable Energy Technology (Yenilenebilir Enerji Teknolojisi)
+                    Biotechnology (Biyoteknoloji)
+                    Nanotechnology (Nanoteknoloji)
+                    Space Technology (Uzay Teknolojisi)
+                    Automotive Technology (Otomotiv Teknolojisi) *@
+
+                    @* <div class="btn-group dropright">
+                    <button type="button" class="btn btn-secondary">
+                    Split dropright
+                    </button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropright</span>
+                    </button>
+                    <div class="dropdown-menu">
+                    <!-- Dropdown menu links -->
+                    <a href="#" class="dropdown-item">Internet</a>
+                    <a href="#" class="dropdown-item">Networking</a>
+                    <a href="#" class="dropdown-item">Virtual Reality</a>
+                    <a href="#" class="dropdown-item">Robotics</a>
+                    </div>
+                    </div> *@
+                </div>
+            </div>
         </nav>
     </div>
 </div>

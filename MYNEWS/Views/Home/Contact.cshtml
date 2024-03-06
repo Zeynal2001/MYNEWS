@@ -2,8 +2,7 @@
 <div class="container-fluid">
     <div class="container">
         <nav class="breadcrumb bg-transparent m-0 p-0">
-            <a class="breadcrumb-item" asp-controller="Home" asp-action="Index">Home</a>
-            <span class="breadcrumb-item active">Contact</span>
+            <a class="breadcrumb-item" asp-controller="Home" asp-action="Index">@Context.Request.Path.ToString()</a>
         </nav>
     </div>
 </div>
