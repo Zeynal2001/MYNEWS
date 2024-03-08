@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MYNEWS.Migrations
 {
-    public partial class mig001 : Migration
+    public partial class mig01 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -206,35 +206,6 @@ namespace MYNEWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "News",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhotoPathForTrending = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoPathSingleBig = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LongPhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoPathForFeatured = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoPathForUserComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ViewsCount = table.Column<int>(type: "int", nullable: true),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_News", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_News_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "Authors",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Subcategories",
                 columns: table => new
                 {
@@ -256,14 +227,73 @@ namespace MYNEWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoPathForTrending = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPathSingleBig = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LongPhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPathForFeatured = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPathForUserComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ViewsCount = table.Column<int>(type: "int", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubcategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_News_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_News_Subcategories_SubcategoryId",
+                        column: x => x.SubcategoryId,
+                        principalTable: "Subcategories",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuthorNews",
+                columns: table => new
+                {
+                    AuthorsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NewsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorNews", x => new { x.AuthorsId, x.NewsId });
+                    table.ForeignKey(
+                        name: "FK_AuthorNews_Authors_AuthorsId",
+                        column: x => x.AuthorsId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AuthorNews_News_NewsId",
+                        column: x => x.NewsId,
+                        principalTable: "News",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Vote = table.Column<int>(type: "int", nullable: true),
-                    NewsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CommentText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -272,14 +302,37 @@ namespace MYNEWS.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Comments_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_News_NewsId",
                         column: x => x.NewsId,
                         principalTable: "News",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewsNewsTag",
+                columns: table => new
+                {
+                    NewsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NewsTagsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsNewsTag", x => new { x.NewsId, x.NewsTagsId });
+                    table.ForeignKey(
+                        name: "FK_NewsNewsTag_News_NewsId",
+                        column: x => x.NewsId,
+                        principalTable: "News",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NewsNewsTag_NewsTags_NewsTagsId",
+                        column: x => x.NewsTagsId,
+                        principalTable: "NewsTags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -289,23 +342,23 @@ namespace MYNEWS.Migrations
                 columns: new[] { "Id", "CategoryName", "CreatedAt", "IsDeleted", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("11bbfd13-c8cc-4d08-8c3d-165ccceb7144"), "Business", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1134), false, null },
-                    { new Guid("c5cc9f08-c983-430a-b40a-d398c3938cf4"), "Technology", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1136), false, null },
-                    { new Guid("ce3a5409-2f54-45d9-a77b-b441267cc2fe"), "Education", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1139), false, null },
-                    { new Guid("e0200635-f56d-4e57-9bd5-796da69b5ff0"), "Society and Culture", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1138), false, null },
-                    { new Guid("ec6afdd8-908e-40a0-ba28-625312a5ad77"), "Health", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1109), false, null }
+                    { new Guid("4807ed0b-8863-42d5-a381-81c5ee0b6494"), "Health", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6335), false, null },
+                    { new Guid("9f25fa00-e334-4d42-8bd1-5ec74e1db120"), "Education", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6343), false, null },
+                    { new Guid("a5feb6ec-ef90-4fcf-adaa-6291db80e6bb"), "Society and Culture", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6341), false, null },
+                    { new Guid("c0b351ce-23c9-4ea2-a642-071f5a5fb720"), "Technology", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6340), false, null },
+                    { new Guid("c88c7808-9f2e-4521-be75-0b7000dd5050"), "Business", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6338), false, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "News",
-                columns: new[] { "Id", "AuthorId", "Content", "CreatedAt", "IsDeleted", "LongPhotoPathForCategories", "PhotoPathForCategories", "PhotoPathForFeatured", "PhotoPathForTrending", "PhotoPathForUserComment", "PhotoPathSingleBig", "Title", "UpdatedAt", "ViewsCount" },
+                columns: new[] { "Id", "CategoryId", "Content", "CreatedAt", "IsDeleted", "LongPhotoPathForCategories", "PhotoPathForCategories", "PhotoPathForFeatured", "PhotoPathForTrending", "PhotoPathForUserComment", "PhotoPathSingleBig", "SubcategoryId", "Title", "UpdatedAt", "ViewsCount" },
                 values: new object[,]
                 {
-                    { new Guid("29de72ab-8c84-4013-8e1a-e8055901d2bc"), null, "Now it's possible. How? Let's dive in:", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1028), false, null, null, null, "img/news-100x100-1.jpg", null, null, "Medicine can now put a stop to cancer", null, null },
-                    { new Guid("2c08f0df-bb92-47ed-b1ed-ff2e9d822687"), null, "Research on this has ended. Here are the main reasons:", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1036), false, null, null, null, "img/news-100x100-5.jpg", null, null, "Why are women usually afraid of guns?", null, null },
-                    { new Guid("64c71c6c-b2a0-44cc-933e-2d2e2f67d2c8"), null, "Here in this article, we have listed them for you. Continue:", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1035), false, null, null, null, "img/news-100x100-3.jpg", null, null, "The best technological products released this year?", null, null },
-                    { new Guid("de833050-c7d3-4aa7-ad03-61257d3ccd58"), null, "The Ministry of Education announced its decision:", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1038), false, null, null, null, null, null, "img/news-700x435-1.jpg", "Important development for kindergartens", null, null },
-                    { new Guid("f10c6527-4837-4c13-931f-5986b8ce4843"), null, "This is easy", new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1033), false, null, null, null, "img/news-100x100-2.jpg", null, null, "How can you increase your efficiency in your business?", null, null }
+                    { new Guid("15cb084c-b8e0-4e7d-9308-5fca3ab68a01"), null, "Now it's possible. How? Let's dive in:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6255), false, null, null, null, "img/news-100x100-1.jpg", null, null, null, "Medicine can now put a stop to cancer", null, null },
+                    { new Guid("4ac322d8-7bce-4c55-8a12-7e120663198a"), null, "This is easy", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6260), false, null, null, null, "img/news-100x100-2.jpg", null, null, null, "How can you increase your efficiency in your business?", null, null },
+                    { new Guid("958f816f-c182-47e2-b46e-5dde9d812e7d"), null, "Here in this article, we have listed them for you. Continue:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6262), false, null, null, null, "img/news-100x100-3.jpg", null, null, null, "The best technological products released this year?", null, null },
+                    { new Guid("bae39aa4-72c3-41d3-84a2-03856e3086ec"), null, "Research on this has ended. Here are the main reasons:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6264), false, null, null, null, "img/news-100x100-5.jpg", null, null, null, "Why are women usually afraid of guns?", null, null },
+                    { new Guid("de45998a-ca05-49c1-803f-788329259fdf"), null, "The Ministry of Education announced its decision:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6266), false, null, null, null, null, null, "img/news-700x435-1.jpg", null, "Important development for kindergartens", null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -313,26 +366,26 @@ namespace MYNEWS.Migrations
                 columns: new[] { "Id", "CreatedAt", "IsDeleted", "TagName", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("0f356242-972c-431c-876b-65c50052cf98"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1237), false, "#CancerResearch", null },
-                    { new Guid("1834dbaa-5b5d-4d49-bc4c-fe5145cb62b0"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1282), false, "#Productivity", null },
-                    { new Guid("1a7a5f77-22fe-4d14-83ae-a1390268a236"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1305), false, "#Women", null },
-                    { new Guid("20ec64c3-714d-402d-9597-4a972c3a9b6e"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1289), false, "#StrategicManagement", null },
-                    { new Guid("25b282d3-8498-45c6-b8a8-cdaa0dc9dc48"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1301), false, "#GenderRoles", null },
-                    { new Guid("2d91ae14-617d-4014-901d-eaecb54e0199"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1312), false, "#Education", null },
-                    { new Guid("3d8e3e4b-b899-4199-a8e3-15128d1c0a1b"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1297), false, "#Innovation", null },
-                    { new Guid("479bc7ce-2307-4a9c-93ab-662f5e5174b1"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1316), false, "#Kindergarten", null },
-                    { new Guid("665d3ce2-51fa-4d96-94c8-fe296cda7eaf"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1231), false, "#Health", null },
-                    { new Guid("73cbbd6c-991f-4d13-b7a3-95d8331f6b2e"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1238), false, "#TreatmentOptions", null },
-                    { new Guid("a036fcb2-fa0f-4c08-8087-ace2ec33846a"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1240), false, "#Efficiency", null },
-                    { new Guid("a7da5142-7aa7-4132-877a-d67e77715aa5"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1299), false, "#TechTrends", null },
-                    { new Guid("b1f07ac9-f0c6-4718-b365-6914fb1dd1dd"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1310), false, "#SocietalFear", null },
-                    { new Guid("bb58eed4-ecce-4d43-aaf9-4137531335a8"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1303), false, "#GunSafety", null },
-                    { new Guid("c3d88511-afd2-4199-9257-3677aa81d792"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1295), false, "#TechProducts", null },
-                    { new Guid("c4219a2a-53b4-4910-a583-44f83c5469cd"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1318), false, "#ChildDevelopment", null },
-                    { new Guid("c7218e0c-22da-4d1b-8fbe-c4c93e5e4fda"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1291), false, "#Technology", null },
-                    { new Guid("d0ce4dd4-c06e-4463-afbe-29f51c753ce9"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1280), false, "#BusinessTips", null },
-                    { new Guid("d777034b-e3e6-45d2-b756-d1cd707f772a"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1235), false, "#MedicalAdvancements", null },
-                    { new Guid("de45e969-2b70-41db-9983-5d28c020b758"), new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1320), false, "#EarlyEducation", null }
+                    { new Guid("11ecaa36-e82e-4a6e-9da0-a2477822fa2c"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6432), false, "#CancerResearch", null },
+                    { new Guid("343d0497-5d7d-43a3-8973-97649a1cd0ee"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6465), false, "#GunSafety", null },
+                    { new Guid("3ae82180-0eff-4f08-8446-7ef96f4cb107"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6443), false, "#Productivity", null },
+                    { new Guid("3e7b7949-6af9-4a15-997e-74f7482d42ca"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6463), false, "#GenderRoles", null },
+                    { new Guid("4b3fbeb9-827a-4978-996b-e9f36772c9bf"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6434), false, "#TreatmentOptions", null },
+                    { new Guid("5af96887-2cf4-49f2-a6ad-eea15500e4ba"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6470), false, "#Women", null },
+                    { new Guid("6285405f-14fd-4130-831c-b3222c8f9d02"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6458), false, "#TechProducts", null },
+                    { new Guid("6b3edd30-4444-4ee0-9c1f-dc798e3a512c"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6430), false, "#MedicalAdvancements", null },
+                    { new Guid("7c07d96c-3dae-4c02-a930-6f504709ce24"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6462), false, "#TechTrends", null },
+                    { new Guid("7e8b2676-680b-45ba-ad3b-21ea0ac18918"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6455), false, "#Technology", null },
+                    { new Guid("886ddfec-c611-41d1-9f28-51455f059bc7"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6472), false, "#SocietalFear", null },
+                    { new Guid("9cf1fd52-7d8b-4ad2-ae1f-15df30bad816"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6454), false, "#StrategicManagement", null },
+                    { new Guid("a8b92c25-d055-43e7-be20-c4e936cf8b93"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6479), false, "#EarlyEducation", null },
+                    { new Guid("acbe374a-3387-4553-a3bc-b4615323443d"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6435), false, "#Efficiency", null },
+                    { new Guid("b3cdd45d-66d1-40c0-990f-64ec92f36899"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6460), false, "#Innovation", null },
+                    { new Guid("bf6ac7b0-9bf9-4d4f-924d-d263d95808de"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6425), false, "#Health", null },
+                    { new Guid("bff43dc9-e3d7-47ad-8499-0d2b0acde8a5"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6438), false, "#BusinessTips", null },
+                    { new Guid("d746b569-f317-4b77-8256-34d2c7baa1a0"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6478), false, "#ChildDevelopment", null },
+                    { new Guid("d7b41864-f553-4d3e-817f-6021949b75bf"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6473), false, "#Education", null },
+                    { new Guid("fd3860b5-0974-4799-b356-baa7089d125c"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6476), false, "#Kindergarten", null }
                 });
 
             migrationBuilder.InsertData(
@@ -340,11 +393,11 @@ namespace MYNEWS.Migrations
                 columns: new[] { "Id", "CategoryId", "CreatedAt", "IsDeleted", "SubcategoryName", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("2b2c06cb-8995-49a9-b269-b83ccadc3ee8"), null, new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1181), false, "Medical and Health News", null },
-                    { new Guid("32f54c7f-e4d3-4172-bc8d-610928212dd4"), null, new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1185), false, "Strategic Management and Planning", null },
-                    { new Guid("52c80779-bf95-4936-a572-fe68c811abff"), null, new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1186), false, "Information Technology and Information Systems", null },
-                    { new Guid("775ade03-0faf-4f77-844e-e38bd4844441"), null, new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1188), false, "Gender and Analysis of Gender Roles in Society", null },
-                    { new Guid("f1aa3836-6e05-4f5e-ba6c-1ad25051f62d"), null, new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1194), false, "Schools and Educational Institutions", null }
+                    { new Guid("0411fb60-5c6b-437d-9f39-7b14047a1a3a"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6377), false, "Medical and Health News", null },
+                    { new Guid("070ffe26-d467-49d6-b864-939a857eb9f3"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6388), false, "Gender and Analysis of Gender Roles in Society", null },
+                    { new Guid("21801b3a-7486-44d5-9df2-ab67b2137b6f"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6383), false, "Information Technology and Information Systems", null },
+                    { new Guid("803775d6-b369-4f8b-a7e5-b78577925f17"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6390), false, "Schools and Educational Institutions", null },
+                    { new Guid("cfaefa09-b6c2-48e5-805c-b3c9d32261c5"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6381), false, "Strategic Management and Planning", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -387,25 +440,40 @@ namespace MYNEWS.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuthorNews_NewsId",
+                table: "AuthorNews",
+                column: "NewsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AppUserId",
+                table: "Comments",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_NewsId",
                 table: "Comments",
                 column: "NewsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserId",
-                table: "Comments",
-                column: "UserId");
+                name: "IX_News_CategoryId",
+                table: "News",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_News_AuthorId",
+                name: "IX_News_SubcategoryId",
                 table: "News",
-                column: "AuthorId");
+                column: "SubcategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_News_Title",
                 table: "News",
                 column: "Title",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsNewsTag_NewsTagsId",
+                table: "NewsNewsTag",
+                column: "NewsTagsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subcategories_CategoryId",
@@ -431,16 +499,19 @@ namespace MYNEWS.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuthorNews");
+
+            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "NewsTags");
-
-            migrationBuilder.DropTable(
-                name: "Subcategories");
+                name: "NewsNewsTag");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
@@ -449,10 +520,13 @@ namespace MYNEWS.Migrations
                 name: "News");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "NewsTags");
 
             migrationBuilder.DropTable(
-                name: "Authors");
+                name: "Subcategories");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

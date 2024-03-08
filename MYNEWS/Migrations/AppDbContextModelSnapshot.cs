@@ -22,6 +22,21 @@ namespace MYNEWS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AuthorNews", b =>
+                {
+                    b.Property<Guid>("AuthorsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("NewsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AuthorsId", "NewsId");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("AuthorNews");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -292,37 +307,37 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ec6afdd8-908e-40a0-ba28-625312a5ad77"),
+                            Id = new Guid("4807ed0b-8863-42d5-a381-81c5ee0b6494"),
                             CategoryName = "Health",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1109),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6335),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("11bbfd13-c8cc-4d08-8c3d-165ccceb7144"),
+                            Id = new Guid("c88c7808-9f2e-4521-be75-0b7000dd5050"),
                             CategoryName = "Business",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1134),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6338),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("c5cc9f08-c983-430a-b40a-d398c3938cf4"),
+                            Id = new Guid("c0b351ce-23c9-4ea2-a642-071f5a5fb720"),
                             CategoryName = "Technology",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1136),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6340),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("e0200635-f56d-4e57-9bd5-796da69b5ff0"),
+                            Id = new Guid("a5feb6ec-ef90-4fcf-adaa-6291db80e6bb"),
                             CategoryName = "Society and Culture",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1138),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6341),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("ce3a5409-2f54-45d9-a77b-b441267cc2fe"),
+                            Id = new Guid("9f25fa00-e334-4d42-8bd1-5ec74e1db120"),
                             CategoryName = "Education",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1139),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6343),
                             IsDeleted = false
                         });
                 });
@@ -332,6 +347,9 @@ namespace MYNEWS.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CommentText")
                         .IsRequired()
@@ -343,23 +361,20 @@ namespace MYNEWS.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("NewsId")
+                    b.Property<Guid?>("NewsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("Vote")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NewsId");
+                    b.HasIndex("AppUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("NewsId");
 
                     b.ToTable("Comments");
                 });
@@ -370,7 +385,7 @@ namespace MYNEWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AuthorId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -401,6 +416,9 @@ namespace MYNEWS.Migrations
                     b.Property<string>("PhotoPathSingleBig")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SubcategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -413,7 +431,9 @@ namespace MYNEWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubcategoryId");
 
                     b.HasIndex("Title")
                         .IsUnique();
@@ -423,45 +443,45 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("29de72ab-8c84-4013-8e1a-e8055901d2bc"),
+                            Id = new Guid("15cb084c-b8e0-4e7d-9308-5fca3ab68a01"),
                             Content = "Now it's possible. How? Let's dive in:",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1028),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6255),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-1.jpg",
                             Title = "Medicine can now put a stop to cancer"
                         },
                         new
                         {
-                            Id = new Guid("f10c6527-4837-4c13-931f-5986b8ce4843"),
+                            Id = new Guid("4ac322d8-7bce-4c55-8a12-7e120663198a"),
                             Content = "This is easy",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1033),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6260),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-2.jpg",
                             Title = "How can you increase your efficiency in your business?"
                         },
                         new
                         {
-                            Id = new Guid("64c71c6c-b2a0-44cc-933e-2d2e2f67d2c8"),
+                            Id = new Guid("958f816f-c182-47e2-b46e-5dde9d812e7d"),
                             Content = "Here in this article, we have listed them for you. Continue:",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1035),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6262),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-3.jpg",
                             Title = "The best technological products released this year?"
                         },
                         new
                         {
-                            Id = new Guid("2c08f0df-bb92-47ed-b1ed-ff2e9d822687"),
+                            Id = new Guid("bae39aa4-72c3-41d3-84a2-03856e3086ec"),
                             Content = "Research on this has ended. Here are the main reasons:",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1036),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6264),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-5.jpg",
                             Title = "Why are women usually afraid of guns?"
                         },
                         new
                         {
-                            Id = new Guid("de833050-c7d3-4aa7-ad03-61257d3ccd58"),
+                            Id = new Guid("de45998a-ca05-49c1-803f-788329259fdf"),
                             Content = "The Ministry of Education announced its decision:",
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1038),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6266),
                             IsDeleted = false,
                             PhotoPathSingleBig = "img/news-700x435-1.jpg",
                             Title = "Important development for kindergartens"
@@ -494,141 +514,141 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("665d3ce2-51fa-4d96-94c8-fe296cda7eaf"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1231),
+                            Id = new Guid("bf6ac7b0-9bf9-4d4f-924d-d263d95808de"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6425),
                             IsDeleted = false,
                             TagName = "#Health"
                         },
                         new
                         {
-                            Id = new Guid("d777034b-e3e6-45d2-b756-d1cd707f772a"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1235),
+                            Id = new Guid("6b3edd30-4444-4ee0-9c1f-dc798e3a512c"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6430),
                             IsDeleted = false,
                             TagName = "#MedicalAdvancements"
                         },
                         new
                         {
-                            Id = new Guid("0f356242-972c-431c-876b-65c50052cf98"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1237),
+                            Id = new Guid("11ecaa36-e82e-4a6e-9da0-a2477822fa2c"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6432),
                             IsDeleted = false,
                             TagName = "#CancerResearch"
                         },
                         new
                         {
-                            Id = new Guid("73cbbd6c-991f-4d13-b7a3-95d8331f6b2e"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1238),
+                            Id = new Guid("4b3fbeb9-827a-4978-996b-e9f36772c9bf"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6434),
                             IsDeleted = false,
                             TagName = "#TreatmentOptions"
                         },
                         new
                         {
-                            Id = new Guid("a036fcb2-fa0f-4c08-8087-ace2ec33846a"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1240),
+                            Id = new Guid("acbe374a-3387-4553-a3bc-b4615323443d"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6435),
                             IsDeleted = false,
                             TagName = "#Efficiency"
                         },
                         new
                         {
-                            Id = new Guid("d0ce4dd4-c06e-4463-afbe-29f51c753ce9"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1280),
+                            Id = new Guid("bff43dc9-e3d7-47ad-8499-0d2b0acde8a5"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6438),
                             IsDeleted = false,
                             TagName = "#BusinessTips"
                         },
                         new
                         {
-                            Id = new Guid("1834dbaa-5b5d-4d49-bc4c-fe5145cb62b0"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1282),
+                            Id = new Guid("3ae82180-0eff-4f08-8446-7ef96f4cb107"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6443),
                             IsDeleted = false,
                             TagName = "#Productivity"
                         },
                         new
                         {
-                            Id = new Guid("20ec64c3-714d-402d-9597-4a972c3a9b6e"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1289),
+                            Id = new Guid("9cf1fd52-7d8b-4ad2-ae1f-15df30bad816"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6454),
                             IsDeleted = false,
                             TagName = "#StrategicManagement"
                         },
                         new
                         {
-                            Id = new Guid("c7218e0c-22da-4d1b-8fbe-c4c93e5e4fda"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1291),
+                            Id = new Guid("7e8b2676-680b-45ba-ad3b-21ea0ac18918"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6455),
                             IsDeleted = false,
                             TagName = "#Technology"
                         },
                         new
                         {
-                            Id = new Guid("c3d88511-afd2-4199-9257-3677aa81d792"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1295),
+                            Id = new Guid("6285405f-14fd-4130-831c-b3222c8f9d02"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6458),
                             IsDeleted = false,
                             TagName = "#TechProducts"
                         },
                         new
                         {
-                            Id = new Guid("3d8e3e4b-b899-4199-a8e3-15128d1c0a1b"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1297),
+                            Id = new Guid("b3cdd45d-66d1-40c0-990f-64ec92f36899"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6460),
                             IsDeleted = false,
                             TagName = "#Innovation"
                         },
                         new
                         {
-                            Id = new Guid("a7da5142-7aa7-4132-877a-d67e77715aa5"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1299),
+                            Id = new Guid("7c07d96c-3dae-4c02-a930-6f504709ce24"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6462),
                             IsDeleted = false,
                             TagName = "#TechTrends"
                         },
                         new
                         {
-                            Id = new Guid("25b282d3-8498-45c6-b8a8-cdaa0dc9dc48"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1301),
+                            Id = new Guid("3e7b7949-6af9-4a15-997e-74f7482d42ca"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6463),
                             IsDeleted = false,
                             TagName = "#GenderRoles"
                         },
                         new
                         {
-                            Id = new Guid("bb58eed4-ecce-4d43-aaf9-4137531335a8"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1303),
+                            Id = new Guid("343d0497-5d7d-43a3-8973-97649a1cd0ee"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6465),
                             IsDeleted = false,
                             TagName = "#GunSafety"
                         },
                         new
                         {
-                            Id = new Guid("1a7a5f77-22fe-4d14-83ae-a1390268a236"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1305),
+                            Id = new Guid("5af96887-2cf4-49f2-a6ad-eea15500e4ba"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6470),
                             IsDeleted = false,
                             TagName = "#Women"
                         },
                         new
                         {
-                            Id = new Guid("b1f07ac9-f0c6-4718-b365-6914fb1dd1dd"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1310),
+                            Id = new Guid("886ddfec-c611-41d1-9f28-51455f059bc7"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6472),
                             IsDeleted = false,
                             TagName = "#SocietalFear"
                         },
                         new
                         {
-                            Id = new Guid("2d91ae14-617d-4014-901d-eaecb54e0199"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1312),
+                            Id = new Guid("d7b41864-f553-4d3e-817f-6021949b75bf"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6473),
                             IsDeleted = false,
                             TagName = "#Education"
                         },
                         new
                         {
-                            Id = new Guid("479bc7ce-2307-4a9c-93ab-662f5e5174b1"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1316),
+                            Id = new Guid("fd3860b5-0974-4799-b356-baa7089d125c"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6476),
                             IsDeleted = false,
                             TagName = "#Kindergarten"
                         },
                         new
                         {
-                            Id = new Guid("c4219a2a-53b4-4910-a583-44f83c5469cd"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1318),
+                            Id = new Guid("d746b569-f317-4b77-8256-34d2c7baa1a0"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6478),
                             IsDeleted = false,
                             TagName = "#ChildDevelopment"
                         },
                         new
                         {
-                            Id = new Guid("de45e969-2b70-41db-9983-5d28c020b758"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1320),
+                            Id = new Guid("a8b92c25-d055-43e7-be20-c4e936cf8b93"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6479),
                             IsDeleted = false,
                             TagName = "#EarlyEducation"
                         });
@@ -665,39 +685,69 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2b2c06cb-8995-49a9-b269-b83ccadc3ee8"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1181),
+                            Id = new Guid("0411fb60-5c6b-437d-9f39-7b14047a1a3a"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6377),
                             IsDeleted = false,
                             SubcategoryName = "Medical and Health News"
                         },
                         new
                         {
-                            Id = new Guid("32f54c7f-e4d3-4172-bc8d-610928212dd4"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1185),
+                            Id = new Guid("cfaefa09-b6c2-48e5-805c-b3c9d32261c5"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6381),
                             IsDeleted = false,
                             SubcategoryName = "Strategic Management and Planning"
                         },
                         new
                         {
-                            Id = new Guid("52c80779-bf95-4936-a572-fe68c811abff"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1186),
+                            Id = new Guid("21801b3a-7486-44d5-9df2-ab67b2137b6f"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6383),
                             IsDeleted = false,
                             SubcategoryName = "Information Technology and Information Systems"
                         },
                         new
                         {
-                            Id = new Guid("775ade03-0faf-4f77-844e-e38bd4844441"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1188),
+                            Id = new Guid("070ffe26-d467-49d6-b864-939a857eb9f3"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6388),
                             IsDeleted = false,
                             SubcategoryName = "Gender and Analysis of Gender Roles in Society"
                         },
                         new
                         {
-                            Id = new Guid("f1aa3836-6e05-4f5e-ba6c-1ad25051f62d"),
-                            CreatedAt = new DateTime(2024, 3, 7, 21, 17, 3, 433, DateTimeKind.Utc).AddTicks(1194),
+                            Id = new Guid("803775d6-b369-4f8b-a7e5-b78577925f17"),
+                            CreatedAt = new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6390),
                             IsDeleted = false,
                             SubcategoryName = "Schools and Educational Institutions"
                         });
+                });
+
+            modelBuilder.Entity("NewsNewsTag", b =>
+                {
+                    b.Property<Guid>("NewsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("NewsTagsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("NewsId", "NewsTagsId");
+
+                    b.HasIndex("NewsTagsId");
+
+                    b.ToTable("NewsNewsTag");
+                });
+
+            modelBuilder.Entity("AuthorNews", b =>
+                {
+                    b.HasOne("MYNEWS.Entities.Author", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MYNEWS.Entities.News", null)
+                        .WithMany()
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -753,33 +803,56 @@ namespace MYNEWS.Migrations
 
             modelBuilder.Entity("MYNEWS.Entities.Comment", b =>
                 {
+                    b.HasOne("MYNEWS.Entities.AppUser", "AppUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("MYNEWS.Entities.News", "News")
+                        .WithMany("Comments")
+                        .HasForeignKey("NewsId");
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("News");
+                });
+
+            modelBuilder.Entity("MYNEWS.Entities.News", b =>
+                {
+                    b.HasOne("MYNEWS.Entities.Category", "Category")
+                        .WithMany("News")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("MYNEWS.Entities.Subcategory", "Subcategory")
+                        .WithMany("News")
+                        .HasForeignKey("SubcategoryId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Subcategory");
+                });
+
+            modelBuilder.Entity("MYNEWS.Entities.Subcategory", b =>
+                {
+                    b.HasOne("MYNEWS.Entities.Category", "Category")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("NewsNewsTag", b =>
+                {
+                    b.HasOne("MYNEWS.Entities.News", null)
                         .WithMany()
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MYNEWS.Entities.AppUser", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("News");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MYNEWS.Entities.News", b =>
-                {
-                    b.HasOne("MYNEWS.Entities.Author", null)
-                        .WithMany("News")
-                        .HasForeignKey("AuthorId");
-                });
-
-            modelBuilder.Entity("MYNEWS.Entities.Subcategory", b =>
-                {
-                    b.HasOne("MYNEWS.Entities.Category", null)
-                        .WithMany("Subcategories")
-                        .HasForeignKey("CategoryId");
+                    b.HasOne("MYNEWS.Entities.NewsTag", null)
+                        .WithMany()
+                        .HasForeignKey("NewsTagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MYNEWS.Entities.AppUser", b =>
@@ -787,14 +860,21 @@ namespace MYNEWS.Migrations
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("MYNEWS.Entities.Author", b =>
-                {
-                    b.Navigation("News");
-                });
-
             modelBuilder.Entity("MYNEWS.Entities.Category", b =>
                 {
+                    b.Navigation("News");
+
                     b.Navigation("Subcategories");
+                });
+
+            modelBuilder.Entity("MYNEWS.Entities.News", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("MYNEWS.Entities.Subcategory", b =>
+                {
+                    b.Navigation("News");
                 });
 #pragma warning restore 612, 618
         }

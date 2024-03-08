@@ -31,6 +31,21 @@ namespace MYNEWS.Data
                 .HasIndex(n => n.Title)
                 .IsUnique(true);
 
+            /*
+             modelBuilder.Entity<News>()
+            .HasOne(n => n.Subcategory)
+            .WithMany(s => s.News)
+            .HasForeignKey("SubcategoryId")
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+             modelBuilder.Entity<News>()
+            .HasOne(n => n.Category)
+            .WithMany(c => c.News)
+            .HasForeignKey("CategoryId")
+            .OnDelete(DeleteBehavior.Restrict);
+            */
+
             modelBuilder.SeedNews();
             modelBuilder.SeedCategories();
             modelBuilder.SeedSubcategories();

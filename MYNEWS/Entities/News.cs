@@ -18,11 +18,15 @@ namespace MYNEWS.Entities
         public string? PhotoPathForCategories { get; set; }
         public string? PhotoPathForUserComment{ get; set; }
         public int? ViewsCount { get; set; }
-        //-----------------------------------------------
+
+        //-------------------RELATIONS-------------------------
         public List<Author> Authors { get; set; }
-        public Category Category { get; set; }
-        public Subcategory Subcategory { get; set; }
         public List<NewsTag> NewsTags { get; set; }
         public List<Comment> Comments { get; set; }
+        //TODO: Admin panelini quranda aşağıda olan nullable ları sil.
+        public Guid? CategoryId { get; set; }
+        public Guid? SubcategoryId { get; set; }
+        public Category Category { get; set; }
+        public Subcategory Subcategory { get; set; }
     }
 }
