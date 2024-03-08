@@ -10,7 +10,10 @@ namespace MYNEWS.Controllers
             return View();
         }
 
-
+        //public IActionResult Subcategories() 
+        //{
+        //    return View();
+        //}
 
         //public IActionResult Pagination() 
         //{
