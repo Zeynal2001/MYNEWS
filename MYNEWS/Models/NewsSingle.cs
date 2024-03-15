@@ -2,9 +2,15 @@
 {
     public class NewsSingle
     {
-        public Guid NewsId { get; set; }
-        public string NewsTitle { get; set; }
-        public string Categories { get; set; }
+        public string Id { get; set; } //Front End-çi üçün Id ni də gətirirk.
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public string PhotoPathSingleBig { get; set; }
+        public string PhotoPathLikeForCategories { get; set; }
+        public string Category { get; set; }
         public string Tags { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ReadingTime { get; set; }
+        public int ViewsCount { get; set; }
     }
 }

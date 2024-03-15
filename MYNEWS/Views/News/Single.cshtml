@@ -1,14 +1,22 @@
-﻿    <!-- Breadcrumb Start -->
+﻿@model NewsSingleVm    
+
+@{
+    var newsDetails = Model.NewsDetails;
+    var comments = Model.UserComment;
+    var relatedNews = Model.RelatedNews;
+}
+
+<!-- Breadcrumb Start -->
 <div class="container-fluid">
     <div class="container">
         <nav class="breadcrumb bg-transparent m-0 p-0">
             <a class="breadcrumb-item" asp-controller="Home" asp-action="Index">Home</a>
             <a class="breadcrumb-item" asp-controller="Categories" asp-action="Index">Category</a>
-            <a class="breadcrumb-item" href="#">Sport</a>
+            <a class="breadcrumb-item" href="#">@newsDetails.Category</a>
             @{
                 //TODO: Aşağıda news title i databaza dan gətir.
             }
-            <span class="breadcrumb-item active">(News Title)Proper training techniques for efficient results</span>
+            <span class="breadcrumb-item active">@newsDetails.Title</span>
         </nav>
     </div>
 </div>
@@ -23,13 +31,14 @@
                     <img class="img-fluid w-100" src="~/img/mesq.png" style="object-fit: cover;">
                     <div class="overlay position-relative bg-light">
                         <div class="mb-3">
-                            <a href="">Sport</a>
+                            <a href="">@newsDetails.Category</a>
                             <span class="px-1">/</span>
-                            <span>January 01, 2045</span>
+                            <span>@newsDetails.CreatedAt</span>
                         </div>
                         <div>
-                            <h3 class="mb-3">Effective Training Techniques for Optimal Results</h3>
+                            <h3 class="mb-3">@newsDetails.Title</h3>
                             <p>
+                                @newsDetails.Content
                                 Are you ready to take your bodybuilding journey to the next level? Achieving optimal results in bodybuilding requires
                                 more than just lifting weights aimlessly. It demands a strategic approach, incorporating effective training techniques
                                 tailored to your goals and body type. Here are some key strategies to help you maximize your workouts and achieve the
@@ -80,7 +89,7 @@
                 <!-- News Detail End -->
                 <!-- Comment List Start -->
                 <div class="bg-light mb-3" style="padding: 30px;">
-                    <h3 class="mb-4">3 Comments</h3>
+                    <h3 class="mb-4">@comments.</h3>
                     <div class="media mb-4">
                         <img src="~/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                         <div class="media-body">
@@ -210,7 +219,7 @@
                 <!-- Popular News Start -->
                 <div class="pb-3">
                     <div class="bg-light py-2 px-4 mb-3">
-                        <h3 class="m-0">Trending</h3>
+                        <h3 class="m-0">Related News</h3>
                     </div>
                     <div class="d-flex mb-3">
                         <img src="~/img/news-100x100-1.jpg" style="width: 100px; height: 100px; object-fit: cover;">

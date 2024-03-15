@@ -50,6 +50,15 @@ namespace MYNEWS.Extensions
                     PhotoPathSingleBig = "img/news-700x435-1.jpg",
                     CreatedAt = DateTime.UtcNow,
                 },
+                new News()
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Effective Training Techniques for Optimal Results",
+                    Content = "Are you ready to take your bodybuilding journey to the next level? Achieving optimal results in bodybuilding requires more than just lifting weights aimlessly. It demands a strategic approach, incorporating effective training techniques tailored to your goals and body type. Here are some key strategies to help you maximize your workouts and achieve the gains you desire:\r\n\r\n1. *Progressive Overload:* One of the fundamental principles of bodybuilding is progressive overload. This involves gradually increasing the stress placed on your muscles over time to stimulate growth. Whether it's adding more weight to your lifts, increasing the number of reps, or shortening rest periods between sets, consistently challenging your muscles is essential for continual progress. 2. *Compound Movements:* Focus on compound exercises that target multiple muscle groups simultaneously, such as squats, deadlifts, bench presses, and pull-ups. These compound movements not only build strength and muscle mass more efficiently but also engage stabilizing muscles, enhancing overall muscle development and functional strength.",
+                    PhotoPathSingleBig = "img/Jerry Ossi_992401984_o.jpg",
+                    PhotoPathForCategories = "img/Jerry Ossi_992401984_o.jpg",
+                    CreatedAt = DateTime.UtcNow,
+                },
             };
 
             modelBuilder.Entity<News>()
@@ -66,31 +75,47 @@ namespace MYNEWS.Extensions
                 {
                     Id= Guid.NewGuid(),
                     CategoryName = "Health",
-                    CreatedAt= DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow
                 },
                 new Category()
                 {
                     Id= Guid.NewGuid(),
                     CategoryName = "Business",
-                    CreatedAt= DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    LongPhotoPathForCategories = "img/cat-500x80-1.jpg"
                 },
                 new Category()
                 {
                     Id= Guid.NewGuid(),
                     CategoryName = "Technology",
-                    CreatedAt= DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    LongPhotoPathForCategories = "img/cat-500x80-2.jpg"
                 },
                 new Category()
                 {
                     Id= Guid.NewGuid(),
                     CategoryName = "Society and Culture",
-                    CreatedAt= DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow
                 },
                 new Category()
                 {
                     Id= Guid.NewGuid(),
                     CategoryName = "Education",
-                    CreatedAt= DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Category()
+                {
+                    Id= Guid.NewGuid(),
+                    CategoryName = "Sport",
+                    CreatedAt = DateTime.UtcNow,
+                    LongPhotoPathForCategories = "img/cat-500x80-4.jpg"
+                },
+                new Category()
+                {
+                    Id= Guid.NewGuid(),
+                    CategoryName = "Entertainment",
+                    CreatedAt = DateTime.UtcNow,
+                    LongPhotoPathForCategories = "img/cat-500x80-3.jpg"
                 },
             };
 
@@ -127,7 +152,7 @@ namespace MYNEWS.Extensions
                 {
                     Id = Guid.NewGuid(),
                     SubcategoryName = "Gender and Analysis of Gender Roles in Society",
-                    CreatedAt= DateTime.UtcNow
+                    CreatedAt= DateTime.UtcNow,
                 },
                 new Subcategory()
                 {

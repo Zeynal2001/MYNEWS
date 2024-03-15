@@ -10,7 +10,7 @@ namespace MYNEWS.Controllers
             return View();
         }
 
-        public IActionResult Single()
+        public IActionResult Single(string newsId)
         {
             ViewData["title"] = "Single";
             return View();
