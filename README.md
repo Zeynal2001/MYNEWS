@@ -1,1 +1,1 @@
-So there you have it, my first web application I made with MVC and Ef.Core 🤩. This web application is a dynamic news portal that can host news from many categories, subcategories and has very nice features.
+So there you have it, my 🤩 first web application that I started making with MVC and Ef.Core. When this web application is completed, it will turn into a dynamic news portal that can host news from many categories and subcategories, and it will have very nice features in itself.
