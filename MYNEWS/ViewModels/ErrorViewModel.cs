@@ -1,4 +1,4 @@
-namespace MYNEWS.Models
+namespace MYNEWS.ViewModels
 {
     public class ErrorViewModel
     {

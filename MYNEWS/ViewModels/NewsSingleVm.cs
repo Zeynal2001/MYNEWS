@@ -11,11 +11,11 @@ namespace MYNEWS.ViewModels
 
     public class RelatedNews
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Title { get; set; }
         public string PhotoPathLikeForTrending { get; set; }
         public string Category { get; set; }
-        public string CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 
     public class UserComment

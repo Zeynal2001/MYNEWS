@@ -1,8 +1,8 @@
 ﻿namespace MYNEWS.Models
 {
-    public class SubcategoryModel
+    public class SubcategoryIndex
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
     }

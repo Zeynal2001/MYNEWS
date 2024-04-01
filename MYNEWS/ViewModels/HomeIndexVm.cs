@@ -7,6 +7,8 @@ namespace MYNEWS.ViewModels
     {
         public List<SliderItem> TrendingNews { get; set; }
         public List<SliderItem> RecentNews { get; set; }
+        public List<SliderItem> FeaturedNews { get; set; }
+        public List<SliderItem> CategoryNews { get; set; }
         public List<CategoryModel>? Categories { get; set; }
         public List<TagModel> Tags { get; set; }
     }

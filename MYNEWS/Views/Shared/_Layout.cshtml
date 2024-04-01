@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+
+    var trending =(List<SliderItem>?) ViewData["trending"];
+
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,6 +27,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    @RenderSection("CategoryCss", false)
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
@@ -33,8 +41,23 @@
                 <div class="d-flex justify-content-between">
                     <div class="bg-primary text-white text-center py-2" style="width: 100px;">Trending</div>
                     <div class="owl-carousel owl-carousel-1 tranding-carousel position-relative d-inline-flex align-items-center ml-3" style="width: calc(100% - 100px); padding-left: 90px;">
-                        <div class="text-truncate"><a class="text-secondary" href="">Labore sit justo amet eos sed, et sanctus dolor diam eos</a></div>
-                        <div class="text-truncate"><a class="text-secondary" href="">Gubergren elitr amet eirmod et lorem diam elitr, ut est erat Gubergren elitr amet eirmod et lorem diam elitr, ut est erat</a></div>
+             
+                        @if (trending != null)
+                        {
+                            foreach (var trendingNews in trending)
+                            {
+                                <div class="text-truncate">
+                                    <a class="text-secondary" href="">
+                                        @trendingNews.Title
+                                    </a>
+                                </div>
+
+                                // <div class="text-truncate"><a class="text-secondary" href="">Labore sit justo amet eos sed, et sanctus dolor diam eos</a></div>
+                            }
+                        }
+                        @{
+                            
+                        }
                     </div>
                 </div>
             </div>

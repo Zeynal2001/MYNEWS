@@ -2,7 +2,8 @@
 <div class="container-fluid">
     <div class="container">
         <nav class="breadcrumb bg-transparent m-0 p-0">
-            <a class="breadcrumb-item" asp-controller="Home" asp-action="Index">@Context.Request.Path.ToString()</a>
+            <a asp-controller="Home" asp-action="Index" class="breadcrumb-item">Home</a>
+            <a asp-controller="Home" asp-action="Contact" class="breadcrumb-item">@Context.Request.Path.ToString().Replace("/Home/", " ")</a>
         </nav>
     </div>
 </div>

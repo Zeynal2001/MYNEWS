@@ -13,11 +13,10 @@ namespace MYNEWS.Entities
         //public string AdditionalPhotoPath { get; set; }
         public string? PhotoPathForTrending { get; set; }
         public string? PhotoPathSingleBig { get; set; }
-        public string? LongPhotoPathForCategories { get; set; }
         public string? PhotoPathForFeatured { get; set; }
         public string? PhotoPathForCategories { get; set; }
         public string? PhotoPathForUserComment{ get; set; }
-        public int? ViewsCount { get; set; }
+        public int ViewsCount { get; set; }
 
         //-------------------RELATIONS-------------------------
         public List<Author> Authors { get; set; }

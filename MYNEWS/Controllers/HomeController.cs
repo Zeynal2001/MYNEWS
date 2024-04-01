@@ -5,6 +5,7 @@ using MYNEWS.Entities;
 using MYNEWS.Models;
 using MYNEWS.ViewModels;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MYNEWS.Controllers
 {
@@ -24,7 +25,7 @@ namespace MYNEWS.Controllers
         
         //private readonly ILogger<HomeController> _logger;
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewData["title"] = "Home";
 
@@ -33,7 +34,7 @@ namespace MYNEWS.Controllers
             // ViewsCount
 
 
-            List<SliderItem> trendingnNews = _context.News.Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathForTrending))
+            List<SliderItem> trendingnNews = await _context.News.Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathForTrending))
                 .OrderByDescending(n => n.ViewsCount)
                 .Take(4)
                 .Select(n => new SliderItem()
@@ -43,7 +44,9 @@ namespace MYNEWS.Controllers
                     PhotoPathForTrending = n.PhotoPathForTrending,
                     CreatedAt = n.CreatedAt
                 })
-                .ToList();
+                .ToListAsync();
+
+            ViewData["trending"] = trendingnNews;
 
             /*
             var news = _context.News.Include(n => n.Category).ToList();
@@ -62,8 +65,7 @@ namespace MYNEWS.Controllers
             }
             */
 
-
-            List<SliderItem> recentNews = _context.News.Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathSingleBig))
+            List<SliderItem> recentNews = await _context.News.Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathSingleBig))
                 .OrderByDescending (n => n.CreatedAt)
                 .Take(2)
                 .Select(n => new SliderItem()
@@ -74,10 +76,10 @@ namespace MYNEWS.Controllers
                     Categories = n.Category.CategoryName,
                     CreatedAt = n.CreatedAt
                 })
-                .ToList();
+                .ToListAsync();
 
 
-            List<CategoryModel> categories = _context.Categories.Where(c => !string.IsNullOrWhiteSpace(c.LongPhotoPathForCategories))
+            List<CategoryModel> categories = await _context.Categories.Where(c => !string.IsNullOrWhiteSpace(c.LongPhotoPathForCategories))
                 .Take(4)
                 .Select(c => new CategoryModel()
                 {
@@ -85,42 +87,52 @@ namespace MYNEWS.Controllers
                     Name = c.CategoryName,
                     LongPhotoPathForCategories = c.LongPhotoPathForCategories
                 })
-                .ToList();
+                .ToListAsync();
 
+            //var categoriescount = categories.Count;
+            //categories.Take(categoriescount);
+
+            List<SliderItem> featuredNews = await _context.News.Where(n => !string.IsNullOrWhiteSpace (n.PhotoPathForFeatured))
+                .OrderByDescending(n => n.CreatedAt)
+                .OrderByDescending(n => n.ViewsCount)
+                .Take(8)
+                .Select(n => new SliderItem()
+                {
+                    NewsId = n.Id,
+                    Title = n.Title,
+                    PhotoPathForFeatured = n.PhotoPathForFeatured,
+                    Categories = n.Category.CategoryName,
+                    CreatedAt = n.CreatedAt
+                })
+                .ToListAsync();
+
+            /*Union un musbet ceheti odur ki, databaza ya sadece bir sorgu gedir.
+            var categoryNews =  await _context.News.
+                Union(_context.News.Where(x => x.Category.CategoryName == "Business").OrderByDescending(n => n.CreatedAt).Take(5).ToList())
+                .Union(_context.News.Where(n => n.Category.CategoryName == "Entertainment").OrderByDescending(n => n.CreatedAt).Take(5).ToList()
+                .Union(_context.News.Where(n => n.Category.CategoryName == "Sports").OrderByDescending(n => n.CreatedAt).Take(5).ToList())
+                .Union(_context.News.Where(n => n.Category.CategoryName == "Technology").OrderByDescending(n => n.CreatedAt).Take(5).ToList()))
+                .Select(n => new SliderItem()
+                {
+                    NewsId = n.Id,
+                    Title = n.Title,
+                    PhotoPathForCategories = n.PhotoPathForCategories,
+                    Categories = n.Category.CategoryName,
+                    CreatedAt = n.CreatedAt
+                })
+                .ToListAsync();
+            */
 
             HomeIndexVm vm = new HomeIndexVm()
             {
                 TrendingNews = trendingnNews,
                 RecentNews = recentNews,
                 Categories = categories,
+                FeaturedNews = featuredNews,
+                //CategoryNews = categoryNews
             };
 
             return View(vm);
-            /*
-            var trendingnNews = _context.News.PhotoPathForTrending.OrderByDescending(n => n.ViewsCount)
-                .Take(4)
-                .Select(n =>  new SliderItem()
-                {
-                    NewsId = n.Id,
-                    Title = n.Title,
-                    PhotoPathForTrending = n.PhotoPathForTrending,
-                    //PhotoPathSingleBig = n.PhotoPathSingleBig,
-                    //LongPhotoPathForCategories = n.LongPhotoPathForCategories,
-                    //PhotoPathForFeatured = n.PhotoPathForFeatured,
-                    //PhotoPathForCategories = n.PhotoPathForCategories,
-                    //Categories = n.Category.CategoryName,
-                    CreatedAt = n.CreatedAt
-                })
-            .ToList();
-            */
-
-            /*
-            public string? PhotoPathForTrending { get; set; }
-            public string? PhotoPathSingleBig { get; set; }
-            public string? LongPhotoPathForCategories { get; set; }
-            public string? PhotoPathForFeatured { get; set; }
-            public string? PhotoPathForCategories { get; set; }
-            */
         }
 
 

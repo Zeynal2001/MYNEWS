@@ -119,6 +119,6 @@ public class AuthController : Controller
 **Umarım bu bilgiler yardımcı olmuştur!**
 
 
-5. ProfilController ->
+5. ProfileController ->
 
 ``Area : Admin``
