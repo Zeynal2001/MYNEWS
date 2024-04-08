@@ -20,7 +20,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(op =>
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
 
-
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.LoginPath = "/Auth/Login";
+});
 
 var app = builder.Build();
 
@@ -37,8 +40,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthentication(); //login ve logout emeliyyatlari ucun
+app.UseAuthorization(); //user veya admin kimi rollar ucun
 
 app.MapControllerRoute(
     name: "default",

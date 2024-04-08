@@ -1,6 +1,6 @@
 ﻿@{
 
-    var trending =(List<SliderItem>?) ViewData["trending"];
+    var trending = (List<SliderItem>?) ViewData["trending"];
 
 }
 
@@ -28,6 +28,8 @@
     <!-- Libraries Stylesheet -->
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     @RenderSection("CategoryCss", false)
+    @RenderSection("LoginCss", false)
+    @RenderSection("RegisterCss", false)
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
@@ -47,16 +49,13 @@
                             foreach (var trendingNews in trending)
                             {
                                 <div class="text-truncate">
-                                    <a class="text-secondary" href="">
+                                    <a class="text-secondary" asp-action="Single" asp-controller="News" asp-route-newsId="@trendingNews.NewsId">
                                         @trendingNews.Title
                                     </a>
                                 </div>
 
                                 // <div class="text-truncate"><a class="text-secondary" href="">Labore sit justo amet eos sed, et sanctus dolor diam eos</a></div>
                             }
-                        }
-                        @{
-                            
                         }
                     </div>
                 </div>
@@ -146,7 +145,17 @@
                         <button class="input-group-text text-secondary"><i
                                 class="fa fa-search"></i></button>
                     </div>
-                    <button type="button" class="btn btn-outline-danger ml-5">Login</button>
+                    @{
+                        if (User.Identity == null || !User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Login" asp-controller="Auth" class="btn btn-outline-danger ml-5"> Sign In</a>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="LogOut" asp-controller="Auth" class="btn btn-outline-danger ml-5"> Sign Out</a>
+                        }
+                    }
+                    @*<button type="button" class="btn btn-outline-danger ml-5"></button>*@
                 </div>
             </div>
         </nav>

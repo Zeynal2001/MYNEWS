@@ -58,6 +58,8 @@ namespace MYNEWS.Controllers
 
         public async Task<IActionResult> CategoryNews(Guid categoryId)
         {
+            ViewData["title"] = "Category News";
+
             var category = await _context.Categories.Include(c => c.Subcategories).FirstOrDefaultAsync(x => x.Id == categoryId);
 
             var categoriesCount = _context.Categories.Count();
@@ -70,7 +72,7 @@ namespace MYNEWS.Controllers
 
             var news = _context.News.Where(x => x.Category.Id == category.Id).Include(x => x.Category).Include(x => x.Subcategory).ToList();
 
-            var categoryList = new CategorySingleVm()
+            var categoryModel = new CategorySingleVm()
             {
                 Id = category.Id,
                 CategoryName = category.CategoryName,
@@ -94,13 +96,13 @@ namespace MYNEWS.Controllers
             };
 
 
-            if (categoryList == null)
+            if (categoryModel == null)
             {
                 ViewData["msg"] = "Unexpected error occurred";
                 return View("Error");
             }
 
-            return View(categoryList);
+            return View(categoryModel);
         }
 
         //public IActionResult Pagination() 

@@ -1,0 +1,68 @@
+﻿@model LoginModel
+
+@section LoginCss {
+    <link rel="stylesheet" href="~/css/login-register.css" />
+}
+
+<div class="container">
+    <div class="form-container">
+        @{
+            if (TempData["successMsg"] != null)
+            {
+                <div class="alert alert-success">@TempData["successMsg"]</div>
+            }
+        }
+        
+        @{
+            if ((bool)ViewData["hasError"])
+            {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+            }
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Email" for="email">Email Address</label>
+                <input asp-for="Email" type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" for="password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" id="password" name="password">
+            </div>
+            
+            @* <p class="text-right d-flex justify-content-center">
+                <a asp-action="Register">Sign Up</a>
+            </p> *@
+            <div class="container d-flex align-items-center justify-content-center flex-column">
+
+
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                    <div class="col d-flex justify-content-center">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                            <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe">
+                            <label asp-for="RememberMe" class="form-check-label" for="rememberMe">Remember me?</label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <!-- Simple link -->
+                        <a href="#!">Forgot password?</a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary d-flex justify-content-center">Sign in</button>
+                </div>
+                @* <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button> *@
+                @*<input type="submit" class="btn btn-primary btn-block mb-4" value="Sign in" />*@
+            </div>
+            <hr/>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+                <p>Not a member? <a asp-action="Register" asp-controller="Auth">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>

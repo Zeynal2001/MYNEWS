@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="~/css/category.css" />
 }
 
+@{
+    var count = 0;
+    var chunks = Model.News;
+}
+<title>MYNEWS-@ViewData["title"]</title>
+
 <!-- Breadcrumb Start -->
 <div class="container-fluid">
     <div class="container">
@@ -72,19 +78,26 @@
                             @{
                                 foreach (var item in Model.News)
                                 {
-                                    <div class="col-lg-6">
-                                        <div class="position-relative mb-3">
-                                            <img class="img-fluid w-100" src="~/@item.PhotoPathForCategories" style="object-fit: cover;">
-                                            <div class="overlay position-relative bg-light">
-                                                <div class="mb-2" style="font-size: 14px;">
-                                                    <a href="">@item.Category</a>
-                                                    <span class="px-1">/</span>
-                                                    <span>@item.CreatedAt</span>
+                                    if (count <= 4)
+                                    {
+                                        <div class="col-lg-6">
+                                            <div class="position-relative mb-3">
+                                                <a asp-action="Single" asp-controller="News" asp-route-newsId="@item.Id">
+                                                    <img class="img-fluid w-100" src="~/@item.PhotoPathForCategories" style="object-fit: cover;">
+                                                </a>
+                                                @*<img class="img-fluid w-100" src="~/@item.PhotoPathForCategories" style="object-fit: cover;">*@
+                                                <div class="overlay position-relative bg-light">
+                                                    <div class="mb-2" style="font-size: 14px;">
+                                                        <a href="">@item.Category</a>
+                                                        <span class="px-1">/</span>
+                                                        <span>@item.CreatedAt.Year - @item.CreatedAt.Month - @item.CreatedAt.Day</span>
+                                                    </div>
+                                                    <a asp-action="Single" asp-controller="News" asp-route-newsId="@item.Id" class="h4">@item.Title</a>
                                                 </div>
-                                                <a class="h4" href="">@item.Title</a>
                                             </div>
                                         </div>
-                                    </div>
+                                       count++;
+                                    }
                                 }
                             }
                         </div>
@@ -97,10 +110,13 @@
                 </div>
 
                 @{
+                    Console.WriteLine("Model News 2");
                     if (Model != null)
                     {
-                        foreach (var item in Model.News)
+                       
+                        for (int i = count; i < Model.News.Count; i++)
                         {
+                            var item = Model.News[i];
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="d-flex mb-3">
@@ -109,7 +125,7 @@
                                             <div class="mb-1" style="font-size: 13px;">
                                                 <a href="">@item.Category</a>
                                                 <span class="px-1">/</span>
-                                                <span>@item.CreatedAt</span>
+                                                <span>@item.CreatedAt.Year @item.CreatedAt.Month @item.CreatedAt.Day</span>
                                             </div>
                                             <a class="h6 m-0" href="">@item.Title</a>
                                         </div>

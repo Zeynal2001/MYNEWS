@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="~/css/category.css" />
 }
 
+<title>MYNEWS-@ViewData["title"]</title>
+
 <div class="container">
     <nav class="breadcrumb bg-transparent m-0 p-0">
         <a asp-controller="Categories" asp-action="Index" class="bread"><span>@Context.Request.Path.ToString().Replace("/", "")</span></a>
