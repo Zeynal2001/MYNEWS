@@ -73,7 +73,8 @@ namespace MYNEWS.Controllers
                     NewsId= n.Id,
                     Title = n.Title,
                     PhotoPathSingleBig = n.PhotoPathSingleBig,
-                    Categories = n.Category.CategoryName,
+                    Category = n.Category.CategoryName,
+                    CategoryId = n.Category.Id.ToString(),
                     CreatedAt = n.CreatedAt
                 })
                 .ToListAsync();
@@ -101,7 +102,8 @@ namespace MYNEWS.Controllers
                     NewsId = n.Id,
                     Title = n.Title,
                     PhotoPathForFeatured = n.PhotoPathForFeatured,
-                    Categories = n.Category.CategoryName,
+                    Category = n.Category.CategoryName,
+                    CategoryId = n.Category.Id.ToString(),
                     CreatedAt = n.CreatedAt
                 })
                 .ToListAsync();
@@ -141,6 +143,60 @@ namespace MYNEWS.Controllers
             ViewData["title"] = "Contact";
             return View();
             //return RedirectToAction("Index");
+        }
+
+
+        public IActionResult Search(string query, int page = 1)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                ViewData["msg"] = "Query can't be empity";
+                return View("Error");
+            }
+
+
+            int size = 5;
+
+            var news = _context.News
+                .Skip((page - 1) * size)
+                .Take(size)
+                .Where(n => n.Title.ToLower().Contains(query.ToLower()) ||
+                                                n.Content.ToLower().Contains(query.ToLower()) ||
+                                                n.Category.CategoryName.ToLower().Contains(query.ToLower()) ||
+                                                n.Subcategory.SubcategoryName.ToLower().Contains(query.ToLower()) ||
+                                                n.NewsTags.Any(tags => tags.TagName.ToLower().Contains(query.ToLower()))
+                                                )
+                .Select(n => new SliderItem()
+                {
+                    NewsId = n.Id,
+                    Title = n.Title,
+                    PhotoPathSingleBig = n.PhotoPathSingleBig,
+                    PhotoPathForCategories = n.PhotoPathForCategories,
+                    PhotoPathForTrending = n.PhotoPathForTrending,
+                    PhotoPathForFeatured = n.PhotoPathForFeatured,
+                    Category = n.Category.CategoryName,
+                    CategoryId = n.Category.Id.ToString(),
+                    CreatedAt = n.CreatedAt
+                }).ToList();
+
+            var totalNews = _context.News.Where(n => n.Title.ToLower().Contains(query.ToLower()) ||
+                                                n.Content.ToLower().Contains(query.ToLower()) ||
+                                                n.Category.CategoryName.ToLower().Contains(query.ToLower()) ||
+                                                n.Subcategory.SubcategoryName.ToLower().Contains(query.ToLower()) ||
+                                                n.NewsTags.Any(tags => tags.TagName.ToLower().Contains(query.ToLower()))
+                                                ).Count();
+
+
+
+            var sm = new SearchModel()
+            {
+                CurrentPage = page,
+                PageCount = (int)Math.Ceiling(totalNews / (double)size),
+                FoundNews = news,
+                Query = query
+            };
+            
+            return View(sm);
         }
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

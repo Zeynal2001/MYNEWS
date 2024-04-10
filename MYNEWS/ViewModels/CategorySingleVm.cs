@@ -24,6 +24,7 @@
         public string? PhotoPathForCategories { get; set; }
         public string? SubCategory { get; set; }
         public string Category { get; set; }
+        public string CategoryId { get; set; }
         public string Tags { get; set; }
         public DateTime CreatedAt { get; set; }
     }

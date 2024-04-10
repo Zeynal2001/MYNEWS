@@ -50,7 +50,7 @@
                                         </a>
                                         <div class="overlay">
                                             <div class="mb-1">
-                                                <a class="text-white" href="">@recentNews.Categories</a>
+                                                <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@recentNews.CategoryId" class="text-white">@recentNews.Category</a>
                                                 <span class="px-2 text-white">/</span>
                                                 <a class="text-white" href="">@recentNews.CreatedAt.Year - @recentNews.CreatedAt.Month - @recentNews.CreatedAt.Day</a>
                                             </div>
@@ -66,14 +66,16 @@
                         <div class="col-lg-4">
                             <div class="d-flex align-items-center justify-content-between bg-light py-2 px-4 mb-3">
                                 <h3 class="m-0">Categories</h3>
-                                <a class="text-secondary font-weight-medium text-decoration-none" href="">View All</a>
+                            <a asp-action="Index" asp-controller="Categories" class="text-secondary font-weight-medium text-decoration-none">View All</a>
                             </div>
                             @{
                                 foreach (var categories in Model.Categories)
                                 {
                                     <div class="position-relative overflow-hidden mb-3" style="height: 80px;">
+                                    <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@categories.Id">
                                         <img class="img-fluid w-100 h-100" src="~/@categories.LongPhotoPathForCategories" style="object-fit: cover;">
-                                        <a href="" class="overlay align-items-center justify-content-center h4 m-0 text-white text-decoration-none">
+                                    </a>
+                                    <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@categories.Id" class="overlay align-items-center justify-content-center h4 m-0 text-white text-decoration-none">
                                             @categories.Name
                                         </a>
                                     </div>
@@ -111,7 +113,7 @@
                                         // eger istifadeçi hemin kateqoriyanın diger xeberlerine de baxmaq istese
                                         // kateqoriyanın adina basib onlara da hızlıca erişe bilsin.
                                     }
-                                    <a class="text-white" href="">@featuredNews.Categories</a>
+                                    <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@featuredNews.CategoryId" class="text-white">@featuredNews.Category</a>
                                     <span class="px-1 text-white">/</span>
                                     <a class="text-white" href="">@featuredNews.CreatedAt.Year - @featuredNews.CreatedAt.Month - @featuredNews.CreatedAt.Day</a>
                                 </div>

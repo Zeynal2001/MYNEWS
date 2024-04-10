@@ -90,6 +90,7 @@ namespace MYNEWS.Controllers
                     PhotoPathForCategories = n.PhotoPathForCategories,
                     PhotoPathForFeatured = n.PhotoPathForFeatured,
                     Category = n.Category.CategoryName,
+                    CategoryId = n.Category.Id.ToString(),
                     SubCategory = n.Subcategory?.SubcategoryName,
                     CreatedAt = n.CreatedAt
                 }).ToList()

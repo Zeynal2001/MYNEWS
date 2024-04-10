@@ -30,7 +30,6 @@
     @RenderSection("CategoryCss", false)
     @RenderSection("LoginCss", false)
     @RenderSection("RegisterCss", false)
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
 </head>
@@ -140,19 +139,42 @@
                     }
                 </div>
                 <div class="input-group ml-auto" style="width: 100%; max-width: 300px;">
-                    <input type="text" class="form-control" placeholder="Keyword">
-                    <div class="input-group-append">
-                        <button class="input-group-text text-secondary"><i
-                                class="fa fa-search"></i></button>
+
+                    <div class="input-group mb-3" style="width: 50%;">
+                        <form method="get" asp-action="Search" asp-controller="Home">
+                            <input type="text" class="form-control" placeholder="Keyword" id='query' name="query">
+                            <div class="input-group-append">
+                                <button class="input-group-text text-secondary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
+                    
+                    
+                    
+                    @*
+                    <div class="input-group mb-3" style="width: 100%;">
+                    <input type="text" class="form-control" placeholder="Keyword" aria-label="Ara">
+                    <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Search</button>
+                    </div>
+                    </div>
+                    *@
+                    
                     @{
                         if (User.Identity == null || !User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="Login" asp-controller="Auth" class="btn btn-outline-danger ml-5"> Sign In</a>
+                            <div class="d-flex justify-content-end" style="width: 50%; height: 50%;">
+                               <a asp-action="Login" asp-controller="Auth" class="btn btn-outline-danger ml-5" style="margin-left: 10px;"> Sign In</a>
+                           </div>
+                           
                         }
                         else if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="LogOut" asp-controller="Auth" class="btn btn-outline-danger ml-5"> Sign Out</a>
+                            <div class="d-flex justify-content-end" style="width: 50%; height: 50%;">
+                               <a asp-action="LogOut" asp-controller="Auth" class="btn btn-outline-danger ml-5" style="margin-left: 10px;"> Sign Out</a>
+                           </div>
                         }
                     }
                     @*<button type="button" class="btn btn-outline-danger ml-5"></button>*@
