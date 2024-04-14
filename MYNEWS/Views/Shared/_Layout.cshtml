@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
 
     var trending = (List<SliderItem>?) ViewData["trending"];
 
@@ -27,9 +28,11 @@
 
     <!-- Libraries Stylesheet -->
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://css-tricks.com/bootstrap-5/">
     @RenderSection("CategoryCss", false)
     @RenderSection("LoginCss", false)
     @RenderSection("RegisterCss", false)
+    @RenderSection("ProfileCss", false)
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
 </head>
@@ -165,16 +168,41 @@
                     @{
                         if (User.Identity == null || !User.Identity.IsAuthenticated)
                         {
-                            <div class="d-flex justify-content-end" style="width: 50%; height: 50%;">
+                           <div class="d-flex justify-content-end" style="width: 50%; height: 50%;">
                                <a asp-action="Login" asp-controller="Auth" class="btn btn-outline-danger ml-5" style="margin-left: 10px;"> Sign In</a>
                            </div>
                            
                         }
                         else if (User.Identity.IsAuthenticated)
                         {
-                            <div class="d-flex justify-content-end" style="width: 50%; height: 50%;">
-                               <a asp-action="LogOut" asp-controller="Auth" class="btn btn-outline-danger ml-5" style="margin-left: 10px;"> Sign Out</a>
-                           </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @{
+                                        var name = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                                    }
+                                    @if (name != null)
+                                    {
+                                        @name.Value
+                                    }
+                                    else
+                                    {
+                                        <span>Profile</span>
+                                    }
+
+
+                                </button>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-item">
+                                        <a asp-action="Index" asp-controller="Profile" class="dropdown-item">Go to your profile</a>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <a asp-action="LogOut" asp-controller="Auth" class="dropdown-item">Sign Out</a>
+                                    </div>
+                                </div>
+                                @* <ul class="dropdown-menu" style="background-color:transparent!important; border:none!important;">
+
+                        </ul> *@
+                            </div>
                         }
                     }
                     @*<button type="button" class="btn btn-outline-danger ml-5"></button>*@

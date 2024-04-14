@@ -6,6 +6,8 @@
         public string CategoryName { get; set; }
         public List<SubcategoriesForThisVm> Subcategories { get; set; }
         public List<NewsForThisVm> News { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
     }
 
     public class SubcategoriesForThisVm
