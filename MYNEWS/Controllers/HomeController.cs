@@ -155,7 +155,7 @@ namespace MYNEWS.Controllers
             }
 
 
-            int size = 5;
+            int size = 10;
 
             var news = _context.News
                 .Skip((page - 1) * size)

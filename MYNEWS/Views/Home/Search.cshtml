@@ -84,22 +84,38 @@
                     if (Model != null)
                     {
 
-                        for (int i = count; i < Model.FoundNews.Count; i++)
+                        for (int i = count + 1; i < Model.FoundNews.Count; i+=2)
                         {
-                            var item = Model.FoundNews[i];
+                            var left = Model.FoundNews[i - 1];
+                            var right = Model.FoundNews[i];
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="d-flex mb-3">
-                                        <a asp-action="Single" asp-controller="News" asp-route-newsId="@item.NewsId">
-                                            <img src="~/@item.PhotoPathForTrending" style="width: 100px; height: 100px; object-fit: cover;">
+                                        <a asp-action="Single" asp-controller="News" asp-route-newsId="@left.NewsId">
+                                            <img src="~/@left.PhotoPathForTrending" style="width: 100px; height: 100px; object-fit: cover;">
                                         </a>
                                         <div class="w-100 d-flex flex-column justify-content-center bg-light px-3" style="height: 100px;">
                                             <div class="mb-1" style="font-size: 13px;">
-                                                <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@item.CategoryId">@item.Category</a>
+                                                <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@left.CategoryId">@left.Category</a>
                                                 <span class="px-1">/</span>
-                                                <span>@item.CreatedAt.Year @item.CreatedAt.Month @item.CreatedAt.Day</span>
+                                                <span>@left.CreatedAt.Year @left.CreatedAt.Month @left.CreatedAt.Day</span>
                                             </div>
-                                            <a class="h6 m-0" asp-action="Single" asp-controller="News" asp-route-newsId="@item.NewsId">@item.Title</a>
+                                            <a class="h6 m-0" asp-action="Single" asp-controller="News" asp-route-newsId="@left.NewsId">@left.Title</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="d-flex mb-3">
+                                        <a asp-action="Single" asp-controller="News" asp-route-newsId="@right.NewsId">
+                                            <img src="~/@right.PhotoPathForTrending" style="width: 100px; height: 100px; object-fit: cover;">
+                                        </a>
+                                        <div class="w-100 d-flex flex-column justify-content-center bg-light px-3" style="height: 100px;">
+                                            <div class="mb-1" style="font-size: 13px;">
+                                                <a asp-action="CategoryNews" asp-controller="Categories" asp-route-categoryId="@right.CategoryId">@right.Category</a>
+                                                <span class="px-1">/</span>
+                                                <span>@right.CreatedAt.Year @right.CreatedAt.Month @right.CreatedAt.Day</span>
+                                            </div>
+                                            <a class="h6 m-0" asp-action="Single" asp-controller="News" asp-route-newsId="@right.NewsId">@right.Title</a>
                                         </div>
                                     </div>
                                 </div>

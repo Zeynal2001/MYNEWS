@@ -78,11 +78,13 @@ namespace MYNEWS.Controllers
         {
             ViewData["title"] = "Category News";
 
-            var category = await _context.Categories.Include(c => c.Subcategories).FirstOrDefaultAsync(x => x.Id == categoryId);
+            var category = await _context.Categories
+                .Include(c => c.Subcategories)
+                .Include(x=>x.News)
+                .ThenInclude(x=>x.NewsTags)
+                .FirstOrDefaultAsync(x => x.Id == categoryId);
 
-            var categoriesCount = _context.Categories.Count();
-
-            if (category == null || categoriesCount == 0)
+            if (category == null)
             {
                 ViewData["msg"] = "Unexpected error occurred";
                 return View("Error");
@@ -96,22 +98,7 @@ namespace MYNEWS.Controllers
                 .OrderByDescending(x => x.CreatedAt) // Xəbərləri ən yeni tarixə görə sıralamaq üçün
                 .Include(x => x.Category)
                 .Include(x => x.Subcategory)
-                .ToList();
-
-            // Total xəbər sayını alırıq
-            var totalNews = _context.News
-                .Count(x => x.Category.Id == category.Id);
-
-            var categoryModel = new CategorySingleVm()
-            {
-                Id = category.Id,
-                CategoryName = category.CategoryName,
-                Subcategories = category.Subcategories?.Select(sc => new SubcategoriesForThisVm()
-                {
-                    Id = sc.Id,
-                    SubcategoryName = sc.SubcategoryName
-                }).ToList() ?? new List<SubcategoriesForThisVm>(),
-                News = news
+                .Include(x => x.NewsTags)
                 .Skip((page - 1) * size)
                 .Take(size)
                 .Select(n => new NewsForThisVm()
@@ -124,11 +111,28 @@ namespace MYNEWS.Controllers
                     PhotoPathForFeatured = n.PhotoPathForFeatured,
                     Category = n.Category.CategoryName,
                     CategoryId = n.Category.Id.ToString(),
-                    SubCategory = n.Subcategory?.SubcategoryName,
+                    SubCategory = n.Subcategory.SubcategoryName,
                     CreatedAt = n.CreatedAt,
-                }).ToList(),
+                }).ToList();
+
+            // Total xəbər sayını alırıq
+            var totalNews = _context.News
+                .Count(x => x.Category.Id == category.Id);
+
+
+            var categoryModel = new CategorySingleVm()
+            {
                 CurrentPage = page,
-                PageCount = (int)Math.Ceiling(totalNews / (double)size)
+                PageCount = (int)Math.Ceiling(totalNews / (double)size),
+
+                Id = category.Id,
+                CategoryName = category.CategoryName,
+                Subcategories = category.Subcategories?.Select(sc => new SubcategoriesForThisVm()
+                {
+                    Id = sc.Id,
+                    SubcategoryName = sc.SubcategoryName
+                }).ToList() ?? new List<SubcategoriesForThisVm>(),
+                News = news
             };
 
             if (categoryModel == null)
