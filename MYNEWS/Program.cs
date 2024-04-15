@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MYNEWS.Abstractions;
 using MYNEWS.Data;
 using MYNEWS.Entities;
+using MYNEWS.Services;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,7 @@ builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.LoginPath = "/Auth/Login";
 });
+builder.Services.AddScoped<IStorageService, LocalStorageService>();
 
 var app = builder.Build();
 
@@ -40,7 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); //login ve logout emeliyyatlari ucun
+app.UseAuthentication(); //login, register ve logout emeliyyatlari ucun
 app.UseAuthorization(); //user veya admin kimi rollar ucun
 
 app.MapControllerRoute(

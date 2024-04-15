@@ -1,9 +1,11 @@
-﻿namespace MYNEWS.Abstractions
+﻿using MYNEWS.Dtos;
+
+namespace MYNEWS.Abstractions
 {
     public interface IStorageService
     {
-        Task UploadFileAsync(string dirPath, IFormFile file);
-        Task UploadFilesAsync(string dirPath, IFormFileCollection files);
+        Task<UploadFileDto> UploadFileAsync(string dirPath, IFormFile file);
+        Task<IEnumerable<UploadFileDto>> UploadFilesAsync(string dirPath, IFormFileCollection files);
         bool HasFile(string dirPath, string fileName);
         Task DeleteFileAsync(string dirPath, string fileName);
     }

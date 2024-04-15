@@ -20,6 +20,8 @@ namespace MYNEWS.Models
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
-        //public FormFile ProfilePhoto { get; set; }
+        [Required]
+        [FileValidator(AcceptedTypes = ".png, .jpg, .jpeg, .svg")]
+        public FormFile ProfilePhoto { get; set; }
     }
 }

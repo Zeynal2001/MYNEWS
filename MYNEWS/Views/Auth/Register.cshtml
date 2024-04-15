@@ -13,43 +13,53 @@
             }
         }
 
-        <form method="post">
-            @*
-            TODO: File upload u duzeldenden sonra gelib burani enable ele
+        <form method="post" enctype="multipart/form-data">
 
             <div class="form-group">
-            <label for="photo">Profile Photo</label>
-            <input type="file" accept=".png, .jpg, .jpeg, .svg" class="form-control" id="photo" name="photo" placeholder="Select your profile photo">
+                <input asp-for="ProfilePhoto" class="form-control" accept=".png, .jpg, .jpeg, .svg">
+                <label asp-for="ProfilePhoto" class="form-label" ></label>
+            </div>
+            @*
+            <div class="form-outline mb-4">
+            <input asp-for="ProfilePhoto" class="form-control" accept=".png, .jpg, .jpeg, .svg" />
+            <label asp-for="ProfilePhoto" class="form-label"></label>
             </div>
             *@
             <div class="form-group">
                 <label asp-for="FirstName" class="form-label">First Name</label>
                 <input asp-for="FirstName" type="text" class="form-control">
             </div>
+
             <div class="form-group">
                 <label asp-for="LastName" class="form-label">Last Name</label>
                 <input asp-for="LastName" type="text" class="form-control">
             </div>
+
             <div class="form-group">
                 <label asp-for="BirthDate" class="form-label">Birth Date</label>
                 <input asp-for="BirthDate" type="date" class="form-control">
             </div>
+
             <div class="form-group">
                 <label asp-for="Email" class="form-label" for="email">Email Address</label>
                 <input asp-for="Email" type="email" class="form-control" id="email" name="email">
             </div>
+
             <div class="form-group">
                 <label asp-for="Password" class="form-label" for="password">Password</label>
                 <input asp-for="Password" type="password" class="form-control" id="password" name="password">
             </div>
+
             <div class="form-group">
                 <label asp-for="ConfirmPassword" class="form-label" for="confirmpassword">Confirm Password</label>
                 <input asp-for="ConfirmPassword" type="password" class="form-control" id="confirmpassword" name="confirmpassword">
             </div>
+
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary">Sign up</button>
             </div>
             <hr/>
+
             <!-- Login buttons -->
             <div class="text-center">
                 <p>Already have account? <a asp-action="Login" asp-controller="Auth">Login</a></p>

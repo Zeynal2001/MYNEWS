@@ -1,4 +1,6 @@
 ﻿using MYNEWS.Abstractions;
+using MYNEWS.Dtos;
+using MYNEWS.Extensions;
 
 namespace MYNEWS.Services
 {
@@ -31,14 +33,40 @@ namespace MYNEWS.Services
             return File.Exists(path);
         }
 
-        public Task UploadFileAsync(string dirPath, IFormFile file)
+        public async Task<UploadFileDto> UploadFileAsync(string dirPath, IFormFile file)
         {
-            throw new NotImplementedException();
+            var path = Path.Combine(_storagePath, dirPath);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            var uploadName = file.GenerateUploadName();
+            var fileStream = File.Open(Path.Combine(path, uploadName), FileMode.CreateNew);
+
+            await file.CopyToAsync(fileStream);
+            fileStream.Close();
+
+            return new UploadFileDto()
+            {
+                FileName = uploadName,
+                FullPath = $"{dirPath}/{uploadName}", //Path.Combine(dirPath, uploadName),
+                FileExtension = Path.GetExtension(uploadName)
+            };
         }
 
-        public Task UploadFilesAsync(string dirPath, IFormFileCollection files)
+        public async Task<IEnumerable<UploadFileDto>> UploadFilesAsync(string dirPath, IFormFileCollection files)
         {
-            throw new NotImplementedException();
+            var uploadedFiles = new List<UploadFileDto>();
+
+            foreach (var file in files)
+            {
+                var dtoFileInstance = await UploadFileAsync(dirPath, file);
+                uploadedFiles.Add(dtoFileInstance);
+            }
+
+            return uploadedFiles;
         }
     }
 }
