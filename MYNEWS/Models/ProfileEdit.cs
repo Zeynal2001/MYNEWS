@@ -1,11 +1,13 @@
 ﻿using MYNEWS.CustomValidations;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 
 namespace MYNEWS.Models
 {
-    public class RegisterModel
+    public class ProfileEdit
     {
+        public string Id { get; set; }
+        [Required]
+        public string NickName { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -16,12 +18,9 @@ namespace MYNEWS.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [Compare(nameof(ConfirmPassword))]
-        public string Password { get; set; }
-        [Required]
-        public string ConfirmPassword { get; set; }
+        public string ProfilePhotoUrl { get; set; }
         [Required]
         [FileValidator(AcceptedTypes = ".png, .jpg, .jpeg, .svg")]
-        public IFormFile ProfilePhoto { get; set; }
+        public IFormFile? ProfilePhoto { get; set; }
     }
 }

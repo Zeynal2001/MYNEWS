@@ -62,6 +62,36 @@ namespace MYNEWS.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b1a03e9e-a949-44f7-be1e-786235131781",
+                            ConcurrencyStamp = "2d7822ee-a159-45b8-934f-0e271ab60f6f",
+                            Name = "None",
+                            NormalizedName = "NONE"
+                        },
+                        new
+                        {
+                            Id = "2533dbf7-2f8c-4a34-a384-683ea4a09888",
+                            ConcurrencyStamp = "a02a92e0-eb07-4476-81d0-30c1600ae50e",
+                            Name = "Admin",
+                            NormalizedName = "ADMİN"
+                        },
+                        new
+                        {
+                            Id = "3216ef84-b790-45f1-b9a3-649e8f999203",
+                            ConcurrencyStamp = "34ccee16-d3dc-45b0-bc42-7209b78e45d1",
+                            Name = "Client",
+                            NormalizedName = "CLİENT"
+                        },
+                        new
+                        {
+                            Id = "290474d2-f5fe-47f4-9a33-6940d6475cef",
+                            ConcurrencyStamp = "5ca0ee0a-ad68-4143-b5e3-e09076bc044d",
+                            Name = "Moderator",
+                            NormalizedName = "MODERATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -178,8 +208,8 @@ namespace MYNEWS.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -216,7 +246,6 @@ namespace MYNEWS.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePhotoPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -310,54 +339,54 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d36a91fc-a7de-4aa7-8933-774c4ccc9ba1"),
+                            Id = new Guid("732f0bab-a28f-4270-bfab-03e3604f55c4"),
                             CategoryName = "Health",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1202),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(55),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("662a8f20-a711-40cf-b90f-19c872fb6d78"),
+                            Id = new Guid("fe74338f-17c3-4a10-a413-a57284c48bb2"),
                             CategoryName = "Business",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1230),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(63),
                             IsDeleted = false,
                             LongPhotoPathForCategories = "img/cat-500x80-1.jpg"
                         },
                         new
                         {
-                            Id = new Guid("4cb1560f-55dd-4448-a402-b1629c04126b"),
+                            Id = new Guid("bbcdfb5c-0f5e-4faa-bef6-3da80d5b9e7d"),
                             CategoryName = "Technology",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1233),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(70),
                             IsDeleted = false,
                             LongPhotoPathForCategories = "img/cat-500x80-2.jpg"
                         },
                         new
                         {
-                            Id = new Guid("16dff4d7-d391-4283-b499-83de67367d04"),
+                            Id = new Guid("15fbad38-fe44-4fdd-b037-47062e4ac3dc"),
                             CategoryName = "Society and Culture",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1235),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(73),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("9d503f11-b843-4aea-84ec-f35f0471e457"),
+                            Id = new Guid("38c7f3fd-5ac2-47b2-84eb-a5f2a345f6d2"),
                             CategoryName = "Education",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1237),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(76),
                             IsDeleted = false
                         },
                         new
                         {
-                            Id = new Guid("0aa3390e-0efa-4b9c-b5f4-cf0a2ab22de7"),
+                            Id = new Guid("8c6bb045-2ebf-48f8-ba98-d8af41f14ae1"),
                             CategoryName = "Sport",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1240),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(79),
                             IsDeleted = false,
                             LongPhotoPathForCategories = "img/cat-500x80-4.jpg"
                         },
                         new
                         {
-                            Id = new Guid("ae6a7abc-ba9d-496c-8de6-19e6e26c214a"),
+                            Id = new Guid("a2750746-dacf-4c4d-9dd8-b41028bbc8a8"),
                             CategoryName = "Entertainment",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1243),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(81),
                             IsDeleted = false,
                             LongPhotoPathForCategories = "img/cat-500x80-3.jpg"
                         });
@@ -419,9 +448,6 @@ namespace MYNEWS.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LongPhotoPathForCategories")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhotoPathForCategories")
                         .HasColumnType("nvarchar(max)");
 
@@ -447,7 +473,7 @@ namespace MYNEWS.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ViewsCount")
+                    b.Property<int>("ViewsCount")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -464,58 +490,64 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("329d3571-8f1b-4e06-840b-b4fa894817e2"),
+                            Id = new Guid("61182b8f-7c7a-4250-8e12-c7dbd1a8ba26"),
                             Content = "Now it's possible. How? Let's dive in:",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(978),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9962),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-1.jpg",
-                            Title = "Medicine can now put a stop to cancer"
+                            Title = "Medicine can now put a stop to cancer",
+                            ViewsCount = 0
                         },
                         new
                         {
-                            Id = new Guid("77b8afa3-0763-4361-ba4f-0306ec4d4873"),
+                            Id = new Guid("b32cc1fa-b341-4d16-81e7-3313fb947a6a"),
                             Content = "This is easy",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1098),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9970),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-2.jpg",
-                            Title = "How can you increase your efficiency in your business?"
+                            Title = "How can you increase your efficiency in your business?",
+                            ViewsCount = 0
                         },
                         new
                         {
-                            Id = new Guid("cb9ce477-e66d-452a-a669-61188d2d2c36"),
+                            Id = new Guid("d927a365-330d-4dc4-be2b-ea480dddb01a"),
                             Content = "Here in this article, we have listed them for you. Continue:",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1101),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9973),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-3.jpg",
-                            Title = "The best technological products released this year?"
+                            Title = "The best technological products released this year?",
+                            ViewsCount = 0
                         },
                         new
                         {
-                            Id = new Guid("5773a9ef-1483-4992-a039-6a63fd77fa56"),
+                            Id = new Guid("5e3fc979-2e3d-42aa-b53e-0fa244a324eb"),
                             Content = "Research on this has ended. Here are the main reasons:",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1104),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9975),
                             IsDeleted = false,
                             PhotoPathForTrending = "img/news-100x100-5.jpg",
-                            Title = "Why are women usually afraid of guns?"
+                            Title = "Why are women usually afraid of guns?",
+                            ViewsCount = 0
                         },
                         new
                         {
-                            Id = new Guid("768c9eac-ae30-449e-b4f3-5d3aa8fedb0f"),
+                            Id = new Guid("c30200d4-9042-4243-ab12-05d7add27c54"),
                             Content = "The Ministry of Education announced its decision:",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1106),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9977),
                             IsDeleted = false,
                             PhotoPathSingleBig = "img/news-700x435-1.jpg",
-                            Title = "Important development for kindergartens"
+                            Title = "Important development for kindergartens",
+                            ViewsCount = 0
                         },
                         new
                         {
-                            Id = new Guid("8651b1d2-8586-4dd5-b94d-0eef515a08e4"),
+                            Id = new Guid("a9c94341-6208-41f3-b405-ec5b9f6fd2bc"),
                             Content = "Are you ready to take your bodybuilding journey to the next level? Achieving optimal results in bodybuilding requires more than just lifting weights aimlessly. It demands a strategic approach, incorporating effective training techniques tailored to your goals and body type. Here are some key strategies to help you maximize your workouts and achieve the gains you desire:\r\n\r\n1. *Progressive Overload:* One of the fundamental principles of bodybuilding is progressive overload. This involves gradually increasing the stress placed on your muscles over time to stimulate growth. Whether it's adding more weight to your lifts, increasing the number of reps, or shortening rest periods between sets, consistently challenging your muscles is essential for continual progress. 2. *Compound Movements:* Focus on compound exercises that target multiple muscle groups simultaneously, such as squats, deadlifts, bench presses, and pull-ups. These compound movements not only build strength and muscle mass more efficiently but also engage stabilizing muscles, enhancing overall muscle development and functional strength.",
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1112),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9983),
                             IsDeleted = false,
                             PhotoPathForCategories = "img/Jerry Ossi_992401984_o.jpg",
                             PhotoPathSingleBig = "img/Jerry Ossi_992401984_o.jpg",
-                            Title = "Effective Training Techniques for Optimal Results"
+                            Title = "Effective Training Techniques for Optimal Results",
+                            ViewsCount = 0
                         });
                 });
 
@@ -545,141 +577,141 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a294e953-3459-47af-a516-5b434767985f"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1370),
+                            Id = new Guid("b21e1c41-d725-4ba1-927a-a593b85d3f05"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(201),
                             IsDeleted = false,
                             TagName = "#Health"
                         },
                         new
                         {
-                            Id = new Guid("ff9ea92d-f85a-494a-ab03-015b96edf559"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1376),
+                            Id = new Guid("9be9026f-ef57-4540-b790-50296ea51e85"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(205),
                             IsDeleted = false,
                             TagName = "#MedicalAdvancements"
                         },
                         new
                         {
-                            Id = new Guid("c32886bf-50cb-4828-b41e-cdf360a5e608"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1379),
+                            Id = new Guid("2068b0fa-7c97-4340-8bd9-68e68e9f3e87"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(207),
                             IsDeleted = false,
                             TagName = "#CancerResearch"
                         },
                         new
                         {
-                            Id = new Guid("d210a6cb-d9cc-4977-b7fe-7d2c04d43334"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1382),
+                            Id = new Guid("d521156a-98f6-4151-9bfc-d2c7c548cbec"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(209),
                             IsDeleted = false,
                             TagName = "#TreatmentOptions"
                         },
                         new
                         {
-                            Id = new Guid("43173774-3de9-43a3-a868-fe4b6abaeb3e"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1384),
+                            Id = new Guid("6f03a45c-da63-42ea-b7f4-b23cee83db71"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(211),
                             IsDeleted = false,
                             TagName = "#Efficiency"
                         },
                         new
                         {
-                            Id = new Guid("15c7496e-177e-425b-9e02-5721b45b421c"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1391),
+                            Id = new Guid("f7e0332a-16f5-4afc-8017-ed8b09776b9d"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(213),
                             IsDeleted = false,
                             TagName = "#BusinessTips"
                         },
                         new
                         {
-                            Id = new Guid("8f5aad48-a79e-476d-866a-1fa516a8116e"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1393),
+                            Id = new Guid("448c3feb-e859-4283-9317-0e3b7da3d1a8"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(218),
                             IsDeleted = false,
                             TagName = "#Productivity"
                         },
                         new
                         {
-                            Id = new Guid("b335e367-b773-4495-b9ea-0782a71df79b"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1395),
+                            Id = new Guid("f4aa00b4-a14d-45c4-a6b3-c016ebbf4d7a"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(220),
                             IsDeleted = false,
                             TagName = "#StrategicManagement"
                         },
                         new
                         {
-                            Id = new Guid("f0d30eca-64e0-45f9-b46a-844ca8ec6fe1"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1398),
+                            Id = new Guid("0c4ae89d-0ecc-4824-ad3b-b60bfbc778ce"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(222),
                             IsDeleted = false,
                             TagName = "#Technology"
                         },
                         new
                         {
-                            Id = new Guid("71866dbd-e888-444b-a76e-9fa21b831254"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1402),
+                            Id = new Guid("61718f5b-3bd3-4237-88b4-65ccd3422415"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(226),
                             IsDeleted = false,
                             TagName = "#TechProducts"
                         },
                         new
                         {
-                            Id = new Guid("0c5781e8-8403-4c3e-9847-9790e2c66f51"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1405),
+                            Id = new Guid("47d63de6-6174-4baa-888a-f87ad72c3a41"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(228),
                             IsDeleted = false,
                             TagName = "#Innovation"
                         },
                         new
                         {
-                            Id = new Guid("ad3cbe2a-5907-4bb7-b5d9-de105dd36f48"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1410),
+                            Id = new Guid("d12a32c7-33b8-4fba-8d04-a959480291bb"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(230),
                             IsDeleted = false,
                             TagName = "#TechTrends"
                         },
                         new
                         {
-                            Id = new Guid("b10d6478-a05d-4d03-b929-86bc60b5295c"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1412),
+                            Id = new Guid("137d23f4-add3-4dd0-8038-77c0a512641b"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(231),
                             IsDeleted = false,
                             TagName = "#GenderRoles"
                         },
                         new
                         {
-                            Id = new Guid("257b61a4-bd60-4090-9eeb-aa8c7578fd55"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1417),
+                            Id = new Guid("9e03b9ad-a8a0-4b0b-b9b8-4c5cc55ef09b"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(233),
                             IsDeleted = false,
                             TagName = "#GunSafety"
                         },
                         new
                         {
-                            Id = new Guid("82b6e281-f14a-42a2-b570-3f5cb91cc4a1"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1419),
+                            Id = new Guid("1ef68e0f-4b77-438d-8ad5-0d17d437e36e"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(239),
                             IsDeleted = false,
                             TagName = "#Women"
                         },
                         new
                         {
-                            Id = new Guid("b75389de-5aa3-4235-9472-fc23b6f425b5"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1422),
+                            Id = new Guid("80599ba0-743f-4e72-9c5a-219d7f2d5b6a"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(241),
                             IsDeleted = false,
                             TagName = "#SocietalFear"
                         },
                         new
                         {
-                            Id = new Guid("8265d213-23f8-4769-9bde-aa3409307f3e"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1424),
+                            Id = new Guid("d6cbf412-c46f-42b0-b597-68cf5f2b5998"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(242),
                             IsDeleted = false,
                             TagName = "#Education"
                         },
                         new
                         {
-                            Id = new Guid("dadf6ec5-8be4-4eb8-ae6b-8f4bf0bb9ee1"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1429),
+                            Id = new Guid("88cba31a-2e7d-44ce-8213-356952d07663"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(246),
                             IsDeleted = false,
                             TagName = "#Kindergarten"
                         },
                         new
                         {
-                            Id = new Guid("91d6b836-24cd-4767-bb82-f7f2b8257c4d"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1431),
+                            Id = new Guid("2b640314-b7fb-4b67-9dbb-7d4d8f29ad6f"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(249),
                             IsDeleted = false,
                             TagName = "#ChildDevelopment"
                         },
                         new
                         {
-                            Id = new Guid("db106fc8-1a7f-4e76-8c71-db4ac32c7a4c"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1433),
+                            Id = new Guid("d1d151d9-ece5-4883-8cf9-b0104e52d71b"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(251),
                             IsDeleted = false,
                             TagName = "#EarlyEducation"
                         });
@@ -716,36 +748,36 @@ namespace MYNEWS.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("95a51760-f1d3-435c-98bd-3aa3d3f146c5"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1303),
+                            Id = new Guid("760055dc-9e98-4295-a4ff-569faef0b51d"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(125),
                             IsDeleted = false,
                             SubcategoryName = "Medical and Health News"
                         },
                         new
                         {
-                            Id = new Guid("8c3b2855-f392-459f-ad31-2f59a2962a5a"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1308),
+                            Id = new Guid("7d1408c1-13ed-4f76-80e4-7674433a7307"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(131),
                             IsDeleted = false,
                             SubcategoryName = "Strategic Management and Planning"
                         },
                         new
                         {
-                            Id = new Guid("a04fa07c-b7bc-4c50-ae06-dce4d0a3f83f"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1315),
+                            Id = new Guid("66b671ee-e1df-4727-8ab9-e72f05b5e032"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(132),
                             IsDeleted = false,
                             SubcategoryName = "Information Technology and Information Systems"
                         },
                         new
                         {
-                            Id = new Guid("9bc49baf-cd7c-42ce-bfb0-2af8832eeb42"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1317),
+                            Id = new Guid("c07dd0f5-6890-46a4-86f0-c981ced8331b"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(141),
                             IsDeleted = false,
                             SubcategoryName = "Gender and Analysis of Gender Roles in Society"
                         },
                         new
                         {
-                            Id = new Guid("0e7ff060-1ed3-4dd4-a6d8-f86ceb401521"),
-                            CreatedAt = new DateTime(2024, 3, 15, 10, 19, 53, 42, DateTimeKind.Utc).AddTicks(1322),
+                            Id = new Guid("60e27b84-b646-4d13-9722-a8a08f852c86"),
+                            CreatedAt = new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(144),
                             IsDeleted = false,
                             SubcategoryName = "Schools and Educational Institutions"
                         });

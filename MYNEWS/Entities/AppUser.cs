@@ -8,7 +8,7 @@ namespace MYNEWS.Entities
     {
         public string UserFName { get; set; }
         public string UserLName { get; set; }
-        public DateTime Age { get; set; }
+        public DateTime BirthDate { get; set; }
         public string? ProfilePhotoPath { get; set; }
         public List<Comment> Comments { get; set; }
     }

@@ -50,6 +50,7 @@ namespace MYNEWS.Data
             modelBuilder.SeedCategories();
             modelBuilder.SeedSubcategories();
             modelBuilder.SeedTags();
+            modelBuilder.SeedRoles();
 
             base.OnModelCreating(modelBuilder);
         }

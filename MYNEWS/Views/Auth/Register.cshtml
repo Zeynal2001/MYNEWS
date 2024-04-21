@@ -3,6 +3,12 @@
 @section RegisterCss {
     <link rel="stylesheet" href="~/css/login-register.css" />
 }
+@*
+@section RegisterJs {
+    <link rel="stylesheet" href="~/js/register.js" />
+}
+*@
+
 
 <div class="container">
     <div class="form-container">
@@ -14,17 +20,21 @@
         }
 
         <form method="post" enctype="multipart/form-data">
-
-            <div class="form-group">
-                <input asp-for="ProfilePhoto" class="form-control" accept=".png, .jpg, .jpeg, .svg">
-                <label asp-for="ProfilePhoto" class="form-label" ></label>
-            </div>
             @*
-            <div class="form-outline mb-4">
-            <input asp-for="ProfilePhoto" class="form-control" accept=".png, .jpg, .jpeg, .svg" />
-            <label asp-for="ProfilePhoto" class="form-label"></label>
+            <div class="form-group">
+            <label asp-for="ProfilePhoto" class="form-label">Profile Photo</label>
+            <input asp-for="ProfilePhoto" class="form-control" accept=".png, .jpg, .jpeg, .svg">
             </div>
             *@
+            
+            <div class="edit-profile-avatar text-center">
+                <img src="avatar.jpg" alt="Profile Photo" class="edit-profile-avatar mb-3" id="avatarPreview">
+                <div class="custom-file">
+                    <input asp-for="ProfilePhoto" type="file" class="custom-file-input" id="avatarInput" onchange="previewAvatar()">
+                    <label asp-for="ProfilePhoto" class="custom-file-label" for="avatarInput">Select your profile photo...</label>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label asp-for="FirstName" class="form-label">First Name</label>
                 <input asp-for="FirstName" type="text" class="form-control">

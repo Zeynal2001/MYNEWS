@@ -29,10 +29,13 @@
     <!-- Libraries Stylesheet -->
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://css-tricks.com/bootstrap-5/">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     @RenderSection("CategoryCss", false)
     @RenderSection("LoginCss", false)
     @RenderSection("RegisterCss", false)
     @RenderSection("ProfileCss", false)
+    @RenderSection("ProfileEditCss", false)
+    
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
 </head>
@@ -302,6 +305,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    @RenderSection("ProfileEditJs", false)
 
     <!-- Contact Javascript File -->
     <script src="~/mail/jqBootstrapValidation.min.js"></script>

@@ -22,11 +22,24 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(op =>
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
 
+//-------------------------------------------------------------
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.LoginPath = "/Auth/Login";
+    opt.AccessDeniedPath = "/Auth/Login";
 });
+
+builder.Services.AddAuthentication()
+    .AddCookie("AdminAuth", opt => //burada yeni þema yaratdýq
+    {
+        opt.LoginPath = "/admin_panel/Auth/Login";
+        opt.AccessDeniedPath = "/admin_panel/Auth/Login";
+    });
+//-------------------------------------------------------------
+
+builder.Services.AddSession();
 builder.Services.AddScoped<IStorageService, LocalStorageService>();
+//Services.AddSingleton<IStorageService, LocalStorageService>();
 
 var app = builder.Build();
 
@@ -42,9 +55,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthentication(); //login, register ve logout emeliyyatlari ucun
 app.UseAuthorization(); //user veya admin kimi rollar ucun
+app.UseSession();
+
+app.MapControllerRoute(name: "area",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}");
 
 app.MapControllerRoute(
     name: "default",

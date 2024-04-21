@@ -47,7 +47,7 @@ namespace MYNEWS.Services
 
             await file.CopyToAsync(fileStream);
             fileStream.Close();
-
+            
             return new UploadFileDto()
             {
                 FileName = uploadName,

@@ -1,0 +1,30 @@
+﻿body {
+    background-color: #f8f9fa; /* Beyaz tonu */
+}
+
+.container {
+    margin-top: 100px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #dc3545; /* Kırmızı tonu */
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.btn-login {
+    background-color: #dc3545; /* Kırmızı tonu */
+    border: none;
+    color: honeydew; /* Honeydew rengi */
+}
+
+    .btn-login:hover {
+        background-color: #c82333; /* Koyu kırmızı tonu */
+        color: honeydew; /* Honeydew rengi */
+    }

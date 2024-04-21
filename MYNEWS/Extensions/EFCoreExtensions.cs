@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MYNEWS.Entities;
+using MYNEWS.Enums;
 using System.Runtime.CompilerServices;
 
 namespace MYNEWS.Extensions
@@ -166,8 +168,6 @@ namespace MYNEWS.Extensions
             modelBuilder.Entity<Subcategory>()
                 .HasData(subcategories);
         }
-
-
 
 
 
@@ -342,6 +342,37 @@ namespace MYNEWS.Extensions
              #ChildDevelopment
              #EarlyEducation
             */
+        }
+
+
+
+
+        public static void SeedRoles(this ModelBuilder modelBuilder)
+        {
+            var roles = Enum.GetNames(typeof(RoleTypes));
+            
+            var identityRoles = new List<IdentityRole>();
+
+            foreach (var role in roles)
+            {
+                identityRoles.Add(new IdentityRole()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = role,
+                    NormalizedName = role.ToUpper(),
+                });
+            }
+            //LINQ
+            /*
+            IEnumerable<IdentityRole> identityRoles = roles.Select(r => new IdentityRole()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = r,
+                NormalizedName = r.ToUpper()
+            });
+            */
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(identityRoles);
         }
     }
 }

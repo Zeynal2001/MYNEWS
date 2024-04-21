@@ -30,8 +30,8 @@ namespace MYNEWS.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserFName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserLName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProfilePhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -75,6 +75,7 @@ namespace MYNEWS.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LongPhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -235,11 +236,10 @@ namespace MYNEWS.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhotoPathForTrending = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPathSingleBig = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LongPhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPathForFeatured = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPathForCategories = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPathForUserComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ViewsCount = table.Column<int>(type: "int", nullable: true),
+                    ViewsCount = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     SubcategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -338,27 +338,41 @@ namespace MYNEWS.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "CategoryName", "CreatedAt", "IsDeleted", "UpdatedAt" },
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("4807ed0b-8863-42d5-a381-81c5ee0b6494"), "Health", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6335), false, null },
-                    { new Guid("9f25fa00-e334-4d42-8bd1-5ec74e1db120"), "Education", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6343), false, null },
-                    { new Guid("a5feb6ec-ef90-4fcf-adaa-6291db80e6bb"), "Society and Culture", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6341), false, null },
-                    { new Guid("c0b351ce-23c9-4ea2-a642-071f5a5fb720"), "Technology", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6340), false, null },
-                    { new Guid("c88c7808-9f2e-4521-be75-0b7000dd5050"), "Business", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6338), false, null }
+                    { "2533dbf7-2f8c-4a34-a384-683ea4a09888", "a02a92e0-eb07-4476-81d0-30c1600ae50e", "Admin", "ADMIN" },
+                    { "290474d2-f5fe-47f4-9a33-6940d6475cef", "5ca0ee0a-ad68-4143-b5e3-e09076bc044d", "Moderator", "MODERATOR" },
+                    { "3216ef84-b790-45f1-b9a3-649e8f999203", "34ccee16-d3dc-45b0-bc42-7209b78e45d1", "Client", "CLIENT" },
+                    { "b1a03e9e-a949-44f7-be1e-786235131781", "2d7822ee-a159-45b8-934f-0e271ab60f6f", "None", "NONE" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "CategoryName", "CreatedAt", "IsDeleted", "LongPhotoPathForCategories", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { new Guid("15fbad38-fe44-4fdd-b037-47062e4ac3dc"), "Society and Culture", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(73), false, null, null },
+                    { new Guid("38c7f3fd-5ac2-47b2-84eb-a5f2a345f6d2"), "Education", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(76), false, null, null },
+                    { new Guid("732f0bab-a28f-4270-bfab-03e3604f55c4"), "Health", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(55), false, null, null },
+                    { new Guid("8c6bb045-2ebf-48f8-ba98-d8af41f14ae1"), "Sport", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(79), false, "img/cat-500x80-4.jpg", null },
+                    { new Guid("a2750746-dacf-4c4d-9dd8-b41028bbc8a8"), "Entertainment", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(81), false, "img/cat-500x80-3.jpg", null },
+                    { new Guid("bbcdfb5c-0f5e-4faa-bef6-3da80d5b9e7d"), "Technology", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(70), false, "img/cat-500x80-2.jpg", null },
+                    { new Guid("fe74338f-17c3-4a10-a413-a57284c48bb2"), "Business", new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(63), false, "img/cat-500x80-1.jpg", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "News",
-                columns: new[] { "Id", "CategoryId", "Content", "CreatedAt", "IsDeleted", "LongPhotoPathForCategories", "PhotoPathForCategories", "PhotoPathForFeatured", "PhotoPathForTrending", "PhotoPathForUserComment", "PhotoPathSingleBig", "SubcategoryId", "Title", "UpdatedAt", "ViewsCount" },
+                columns: new[] { "Id", "CategoryId", "Content", "CreatedAt", "IsDeleted", "PhotoPathForCategories", "PhotoPathForFeatured", "PhotoPathForTrending", "PhotoPathForUserComment", "PhotoPathSingleBig", "SubcategoryId", "Title", "UpdatedAt", "ViewsCount" },
                 values: new object[,]
                 {
-                    { new Guid("15cb084c-b8e0-4e7d-9308-5fca3ab68a01"), null, "Now it's possible. How? Let's dive in:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6255), false, null, null, null, "img/news-100x100-1.jpg", null, null, null, "Medicine can now put a stop to cancer", null, null },
-                    { new Guid("4ac322d8-7bce-4c55-8a12-7e120663198a"), null, "This is easy", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6260), false, null, null, null, "img/news-100x100-2.jpg", null, null, null, "How can you increase your efficiency in your business?", null, null },
-                    { new Guid("958f816f-c182-47e2-b46e-5dde9d812e7d"), null, "Here in this article, we have listed them for you. Continue:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6262), false, null, null, null, "img/news-100x100-3.jpg", null, null, null, "The best technological products released this year?", null, null },
-                    { new Guid("bae39aa4-72c3-41d3-84a2-03856e3086ec"), null, "Research on this has ended. Here are the main reasons:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6264), false, null, null, null, "img/news-100x100-5.jpg", null, null, null, "Why are women usually afraid of guns?", null, null },
-                    { new Guid("de45998a-ca05-49c1-803f-788329259fdf"), null, "The Ministry of Education announced its decision:", new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6266), false, null, null, null, null, null, "img/news-700x435-1.jpg", null, "Important development for kindergartens", null, null }
+                    { new Guid("5e3fc979-2e3d-42aa-b53e-0fa244a324eb"), null, "Research on this has ended. Here are the main reasons:", new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9975), false, null, null, "img/news-100x100-5.jpg", null, null, null, "Why are women usually afraid of guns?", null, 0 },
+                    { new Guid("61182b8f-7c7a-4250-8e12-c7dbd1a8ba26"), null, "Now it's possible. How? Let's dive in:", new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9962), false, null, null, "img/news-100x100-1.jpg", null, null, null, "Medicine can now put a stop to cancer", null, 0 },
+                    { new Guid("a9c94341-6208-41f3-b405-ec5b9f6fd2bc"), null, "Are you ready to take your bodybuilding journey to the next level? Achieving optimal results in bodybuilding requires more than just lifting weights aimlessly. It demands a strategic approach, incorporating effective training techniques tailored to your goals and body type. Here are some key strategies to help you maximize your workouts and achieve the gains you desire:\r\n\r\n1. *Progressive Overload:* One of the fundamental principles of bodybuilding is progressive overload. This involves gradually increasing the stress placed on your muscles over time to stimulate growth. Whether it's adding more weight to your lifts, increasing the number of reps, or shortening rest periods between sets, consistently challenging your muscles is essential for continual progress. 2. *Compound Movements:* Focus on compound exercises that target multiple muscle groups simultaneously, such as squats, deadlifts, bench presses, and pull-ups. These compound movements not only build strength and muscle mass more efficiently but also engage stabilizing muscles, enhancing overall muscle development and functional strength.", new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9983), false, "img/Jerry Ossi_992401984_o.jpg", null, null, null, "img/Jerry Ossi_992401984_o.jpg", null, "Effective Training Techniques for Optimal Results", null, 0 },
+                    { new Guid("b32cc1fa-b341-4d16-81e7-3313fb947a6a"), null, "This is easy", new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9970), false, null, null, "img/news-100x100-2.jpg", null, null, null, "How can you increase your efficiency in your business?", null, 0 },
+                    { new Guid("c30200d4-9042-4243-ab12-05d7add27c54"), null, "The Ministry of Education announced its decision:", new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9977), false, null, null, null, null, "img/news-700x435-1.jpg", null, "Important development for kindergartens", null, 0 },
+                    { new Guid("d927a365-330d-4dc4-be2b-ea480dddb01a"), null, "Here in this article, we have listed them for you. Continue:", new DateTime(2024, 4, 21, 12, 34, 21, 475, DateTimeKind.Utc).AddTicks(9973), false, null, null, "img/news-100x100-3.jpg", null, null, null, "The best technological products released this year?", null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -366,26 +380,26 @@ namespace MYNEWS.Migrations
                 columns: new[] { "Id", "CreatedAt", "IsDeleted", "TagName", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("11ecaa36-e82e-4a6e-9da0-a2477822fa2c"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6432), false, "#CancerResearch", null },
-                    { new Guid("343d0497-5d7d-43a3-8973-97649a1cd0ee"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6465), false, "#GunSafety", null },
-                    { new Guid("3ae82180-0eff-4f08-8446-7ef96f4cb107"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6443), false, "#Productivity", null },
-                    { new Guid("3e7b7949-6af9-4a15-997e-74f7482d42ca"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6463), false, "#GenderRoles", null },
-                    { new Guid("4b3fbeb9-827a-4978-996b-e9f36772c9bf"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6434), false, "#TreatmentOptions", null },
-                    { new Guid("5af96887-2cf4-49f2-a6ad-eea15500e4ba"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6470), false, "#Women", null },
-                    { new Guid("6285405f-14fd-4130-831c-b3222c8f9d02"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6458), false, "#TechProducts", null },
-                    { new Guid("6b3edd30-4444-4ee0-9c1f-dc798e3a512c"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6430), false, "#MedicalAdvancements", null },
-                    { new Guid("7c07d96c-3dae-4c02-a930-6f504709ce24"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6462), false, "#TechTrends", null },
-                    { new Guid("7e8b2676-680b-45ba-ad3b-21ea0ac18918"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6455), false, "#Technology", null },
-                    { new Guid("886ddfec-c611-41d1-9f28-51455f059bc7"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6472), false, "#SocietalFear", null },
-                    { new Guid("9cf1fd52-7d8b-4ad2-ae1f-15df30bad816"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6454), false, "#StrategicManagement", null },
-                    { new Guid("a8b92c25-d055-43e7-be20-c4e936cf8b93"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6479), false, "#EarlyEducation", null },
-                    { new Guid("acbe374a-3387-4553-a3bc-b4615323443d"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6435), false, "#Efficiency", null },
-                    { new Guid("b3cdd45d-66d1-40c0-990f-64ec92f36899"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6460), false, "#Innovation", null },
-                    { new Guid("bf6ac7b0-9bf9-4d4f-924d-d263d95808de"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6425), false, "#Health", null },
-                    { new Guid("bff43dc9-e3d7-47ad-8499-0d2b0acde8a5"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6438), false, "#BusinessTips", null },
-                    { new Guid("d746b569-f317-4b77-8256-34d2c7baa1a0"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6478), false, "#ChildDevelopment", null },
-                    { new Guid("d7b41864-f553-4d3e-817f-6021949b75bf"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6473), false, "#Education", null },
-                    { new Guid("fd3860b5-0974-4799-b356-baa7089d125c"), new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6476), false, "#Kindergarten", null }
+                    { new Guid("0c4ae89d-0ecc-4824-ad3b-b60bfbc778ce"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(222), false, "#Technology", null },
+                    { new Guid("137d23f4-add3-4dd0-8038-77c0a512641b"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(231), false, "#GenderRoles", null },
+                    { new Guid("1ef68e0f-4b77-438d-8ad5-0d17d437e36e"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(239), false, "#Women", null },
+                    { new Guid("2068b0fa-7c97-4340-8bd9-68e68e9f3e87"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(207), false, "#CancerResearch", null },
+                    { new Guid("2b640314-b7fb-4b67-9dbb-7d4d8f29ad6f"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(249), false, "#ChildDevelopment", null },
+                    { new Guid("448c3feb-e859-4283-9317-0e3b7da3d1a8"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(218), false, "#Productivity", null },
+                    { new Guid("47d63de6-6174-4baa-888a-f87ad72c3a41"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(228), false, "#Innovation", null },
+                    { new Guid("61718f5b-3bd3-4237-88b4-65ccd3422415"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(226), false, "#TechProducts", null },
+                    { new Guid("6f03a45c-da63-42ea-b7f4-b23cee83db71"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(211), false, "#Efficiency", null },
+                    { new Guid("80599ba0-743f-4e72-9c5a-219d7f2d5b6a"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(241), false, "#SocietalFear", null },
+                    { new Guid("88cba31a-2e7d-44ce-8213-356952d07663"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(246), false, "#Kindergarten", null },
+                    { new Guid("9be9026f-ef57-4540-b790-50296ea51e85"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(205), false, "#MedicalAdvancements", null },
+                    { new Guid("9e03b9ad-a8a0-4b0b-b9b8-4c5cc55ef09b"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(233), false, "#GunSafety", null },
+                    { new Guid("b21e1c41-d725-4ba1-927a-a593b85d3f05"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(201), false, "#Health", null },
+                    { new Guid("d12a32c7-33b8-4fba-8d04-a959480291bb"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(230), false, "#TechTrends", null },
+                    { new Guid("d1d151d9-ece5-4883-8cf9-b0104e52d71b"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(251), false, "#EarlyEducation", null },
+                    { new Guid("d521156a-98f6-4151-9bfc-d2c7c548cbec"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(209), false, "#TreatmentOptions", null },
+                    { new Guid("d6cbf412-c46f-42b0-b597-68cf5f2b5998"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(242), false, "#Education", null },
+                    { new Guid("f4aa00b4-a14d-45c4-a6b3-c016ebbf4d7a"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(220), false, "#StrategicManagement", null },
+                    { new Guid("f7e0332a-16f5-4afc-8017-ed8b09776b9d"), new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(213), false, "#BusinessTips", null }
                 });
 
             migrationBuilder.InsertData(
@@ -393,11 +407,11 @@ namespace MYNEWS.Migrations
                 columns: new[] { "Id", "CategoryId", "CreatedAt", "IsDeleted", "SubcategoryName", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("0411fb60-5c6b-437d-9f39-7b14047a1a3a"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6377), false, "Medical and Health News", null },
-                    { new Guid("070ffe26-d467-49d6-b864-939a857eb9f3"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6388), false, "Gender and Analysis of Gender Roles in Society", null },
-                    { new Guid("21801b3a-7486-44d5-9df2-ab67b2137b6f"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6383), false, "Information Technology and Information Systems", null },
-                    { new Guid("803775d6-b369-4f8b-a7e5-b78577925f17"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6390), false, "Schools and Educational Institutions", null },
-                    { new Guid("cfaefa09-b6c2-48e5-805c-b3c9d32261c5"), null, new DateTime(2024, 3, 8, 18, 38, 45, 367, DateTimeKind.Utc).AddTicks(6381), false, "Strategic Management and Planning", null }
+                    { new Guid("60e27b84-b646-4d13-9722-a8a08f852c86"), null, new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(144), false, "Schools and Educational Institutions", null },
+                    { new Guid("66b671ee-e1df-4727-8ab9-e72f05b5e032"), null, new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(132), false, "Information Technology and Information Systems", null },
+                    { new Guid("760055dc-9e98-4295-a4ff-569faef0b51d"), null, new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(125), false, "Medical and Health News", null },
+                    { new Guid("7d1408c1-13ed-4f76-80e4-7674433a7307"), null, new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(131), false, "Strategic Management and Planning", null },
+                    { new Guid("c07dd0f5-6890-46a4-86f0-c981ced8331b"), null, new DateTime(2024, 4, 21, 12, 34, 21, 476, DateTimeKind.Utc).AddTicks(141), false, "Gender and Analysis of Gender Roles in Society", null }
                 });
 
             migrationBuilder.CreateIndex(
