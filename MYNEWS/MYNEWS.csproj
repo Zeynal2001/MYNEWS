@@ -24,9 +24,14 @@
 
   <ItemGroup>
     <Folder Include="Areas\admin_panel\Data\" />
+    <Folder Include="Areas\admin_panel\Views\Shared\" />
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\admin\js\" />
     <Folder Include="wwwroot\uploads\profile-photos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\admin\js\.DS_Store" />
+    <None Include="wwwroot\admin\vendors\.DS_Store" />
   </ItemGroup>
 
 </Project>
