@@ -30,7 +30,7 @@
             <div class="edit-profile-avatar text-center">
                 <img src="avatar.jpg" alt="Profile Photo" class="edit-profile-avatar mb-3" id="avatarPreview">
                 <div class="custom-file">
-                    <input asp-for="ProfilePhoto" type="file" class="custom-file-input" id="avatarInput" onchange="previewAvatar()">
+                    <input asp-for="ProfilePhoto" type="file" accept=".png, .jpg, .jpeg, .svg" class="custom-file-input" id="avatarInput" onchange="previewAvatar()">
                     <label asp-for="ProfilePhoto" class="custom-file-label" for="avatarInput">Select your profile photo...</label>
                 </div>
             </div>

@@ -1,0 +1,21 @@
+﻿@model ErrorModel
+
+<div class="row">
+    <div class="col-md-12 margin-grid">
+        <div class="alert alert-danger">
+            <h1 class="text-danger">Error 404 Not Found</h1>
+        </div>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12 margin-grid">
+        @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                <h2 class="text-danger">@Model.ErrorMessage.</h2>
+            </div>
+        }
+    </div>
+</div>
+<hr />

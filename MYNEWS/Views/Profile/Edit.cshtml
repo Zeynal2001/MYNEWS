@@ -19,7 +19,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body d-flex justify-content-center">
                         <div id="profile-image-cont" style="background-image: url('@(Url.Content($"~/{Model.ProfileDetails.ProfilePhotoUrl}"))');">
-                            <input asp-for="@Model.ProfileDetails.ProfilePhoto" type="file" id="profile-image-inp" />
+                            <input asp-for="@Model.ProfileDetails.ProfilePhoto" accept=".png, .jpg, .jpeg, .svg" type="file" id="profile-image-inp" />
                         </div>
                     </div>
                 </div>

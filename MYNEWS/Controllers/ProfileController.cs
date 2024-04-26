@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MYNEWS.Abstractions;
 using MYNEWS.Entities;
+using MYNEWS.Enums;
 using MYNEWS.Models;
 using MYNEWS.Services;
 using MYNEWS.ViewModels;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 
 namespace MYNEWS.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = nameof(RoleTypes.Client))]
     public class ProfileController : Controller
     {
         public ProfileController(UserManager<AppUser> userManager, IStorageService storageService)
@@ -61,16 +62,6 @@ namespace MYNEWS.Controllers
                 Email = user.Email,
                 ProfilPhoto = user.ProfilePhotoPath
             };
-
-            /*
-            // Calculate the time difference between the user's date of birth and the current date
-            var ageInDays = (DateTime.Now - user.Age).TotalDays;
-
-            // Convert the age in days to years
-            var ageInYears = (int)Math.Floor(ageInDays / 365.25); // Considering leap years
-
-            profileModel.Age = ageInYears;
-            */
 
             HttpContext.Session.SetAsJson<ProfileEdit>("userDetails", profileEdit);
 
