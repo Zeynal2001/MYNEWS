@@ -10,6 +10,8 @@ namespace MYNEWS.Entities
         public string UserLName { get; set; }
         public DateTime BirthDate { get; set; }
         public string? ProfilePhotoPath { get; set; }
+
+        //TODO: public bool IsDeleted { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }

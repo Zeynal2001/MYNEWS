@@ -25,6 +25,5 @@ namespace MYNEWS.Areas.admin_panel.Models
         [Required]
         public string[] Tags { get; set; }
 
-
     }
 }

@@ -34,9 +34,10 @@ namespace MYNEWS.Controllers
             // ViewsCount
 
 
-            List<SliderItem> trendingnNews = await _context.News.Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathForTrending))
+            List<SliderItem> trendingnNews = await _context.News
+                .Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathForTrending) && !n.IsDeleted)
                 .OrderByDescending(n => n.ViewsCount)
-                .Take(4)
+                .Take(5)
                 .Select(n => new SliderItem()
                 {
                     NewsId = n.Id,
@@ -65,9 +66,10 @@ namespace MYNEWS.Controllers
             }
             */
 
-            List<SliderItem> recentNews = await _context.News.Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathSingleBig))
+            List<SliderItem> recentNews = await _context.News
+                .Where(n => !string.IsNullOrWhiteSpace(n.PhotoPathSingleBig) && !n.IsDeleted)
                 .OrderByDescending (n => n.CreatedAt)
-                .Take(2)
+                .Take(3)
                 .Select(n => new SliderItem()
                 {
                     NewsId= n.Id,
@@ -80,7 +82,8 @@ namespace MYNEWS.Controllers
                 .ToListAsync();
 
 
-            List<CategoryModel> categories = await _context.Categories.Where(c => !string.IsNullOrWhiteSpace(c.LongPhotoPathForCategories))
+            List<CategoryModel> categories = await _context.Categories
+                .Where(c => !string.IsNullOrWhiteSpace(c.LongPhotoPathForCategories) && !c.IsDeleted)
                 .Take(4)
                 .Select(c => new CategoryModel()
                 {
@@ -93,7 +96,8 @@ namespace MYNEWS.Controllers
             //var categoriescount = categories.Count;
             //categories.Take(categoriescount);
 
-            List<SliderItem> featuredNews = await _context.News.Where(n => !string.IsNullOrWhiteSpace (n.PhotoPathForFeatured))
+            List<SliderItem> featuredNews = await _context.News
+                .Where(n => !string.IsNullOrWhiteSpace (n.PhotoPathForFeatured) && !n.IsDeleted)
                 .OrderByDescending(n => n.CreatedAt)
                 .OrderByDescending(n => n.ViewsCount)
                 .Take(8)
@@ -160,7 +164,7 @@ namespace MYNEWS.Controllers
             var news = _context.News
                 .Skip((page - 1) * size)
                 .Take(size)
-                .Where(n => n.Title.ToLower().Contains(query.ToLower()) ||
+                .Where(n => !n.IsDeleted && n.Title.ToLower().Contains(query.ToLower()) ||
                                                 n.Content.ToLower().Contains(query.ToLower()) ||
                                                 n.Category.CategoryName.ToLower().Contains(query.ToLower()) ||
                                                 n.Subcategory.SubcategoryName.ToLower().Contains(query.ToLower()) ||
